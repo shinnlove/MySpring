@@ -1,0 +1,13 @@
+*.git
+.project
+.classpath
+*.prefs
+*.bat
+target
+*.class
+bin
+.DS_Store
+*.log
+.txt
+.idea/
+*.iml
