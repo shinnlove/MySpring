@@ -22,7 +22,21 @@ import com.shinnlove.common.model.User;
  */
 public class UserDaoImpl implements UserDao {
 
+    /** hibernate session工厂 */
     private SessionFactory sessionFactory;
+
+    @Override
+    public void saveUser(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            session.save(user);
+            tx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+    }
 
     @Override
     public User getUserById(int id) {

@@ -57,6 +57,9 @@ public class CommonFileUploadController {
 
         System.out.println(path);
 
+        User newUser = new User("evelyn", "19881218", 28);
+        userDao.saveUser(newUser);
+
         File targetFile = new File(path, fileName);
         if (!targetFile.exists()) {
             targetFile.mkdirs();

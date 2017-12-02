@@ -2,7 +2,7 @@
  * Alipay.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-package com.shinnlove.common.dao.test;
+package com.shinnlove.common.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
