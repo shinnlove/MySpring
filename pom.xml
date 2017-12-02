@@ -13,7 +13,6 @@
         <apache.cxf.version>3.1.7</apache.cxf.version>
         <http.client.version>4.2.3</http.client.version>
         <apache.httpclient.version>4.5.3</apache.httpclient.version>
-        <apache.httpcore.version>4.3.3</apache.httpcore.version>
         <apache.httpmime.version>4.3.3</apache.httpmime.version>
     </properties>
     <dependencies>
@@ -176,20 +175,9 @@
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>${apache.httpcore.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>${apache.httpmime.version}</version>
         </dependency>
-        <!-- common-httpclient，与apche用一个就好 -->
-        <!--<dependency>-->
-        <!--<groupId>commons-httpclient</groupId>-->
-        <!--<artifactId>commons-httpclient</artifactId>-->
-        <!--<version>3.1</version>-->
-        <!--</dependency>-->
 
         <!-- apache active mq -->
         <!--<dependency>-->
