@@ -4,6 +4,7 @@
  */
 package com.shinnlove.common.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -68,7 +69,34 @@ public class WebDataDaoImpl implements WebDataDao {
 
     @Override
     public List<WebData> queryWebDataByPage(int pageNo, int pageSize) {
-        return null;
+
+        List<WebData> webDataList = new ArrayList<>();
+
+        String hql = "from WebData";
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery(hql);
+
+            // 从第几条开始、每一查询返回多少数量
+            query.setFirstResult((pageNo - 1) * pageSize);
+            query.setMaxResults(pageSize);
+
+            List list = query.list();
+            tx.commit();
+
+            // 转换
+            for (Object o : list) {
+                webDataList.add((WebData) o);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+
+        return webDataList;
     }
 
     /**

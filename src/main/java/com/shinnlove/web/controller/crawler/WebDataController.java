@@ -4,14 +4,20 @@
  */
 package com.shinnlove.web.controller.crawler;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.web.controller.request.WebDataRequest;
 
 /**
  * 网页数据处理控制器。
@@ -30,6 +36,44 @@ public class WebDataController {
     public String getWebData() {
         int id = 1;
         WebData webData = webDataDao.getWebDataById(1);
+        JSONObject o = convert(webData);
+        return o.toJSONString();
+    }
+
+    /**
+     * 分页查询webData
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/webDataList.json", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String getWebDataByPage(@RequestBody String paramKey) {
+        JSONObject result;
+        try {
+            WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
+            List<WebData> webDataList = webDataDao.queryWebDataByPage(request.getPageNo(),
+                request.getPageSize());
+            JSONArray array = new JSONArray();
+            for (WebData w : webDataList) {
+                JSONObject o = convert(w);
+                array.add(o);
+            }
+
+            result = buildResult(0, "ok", array);
+        } catch (Exception e) {
+            result = buildResult(-1, "System Error:" + e.getMessage(), null);
+        }
+
+        return result.toJSONString();
+    }
+
+    /**
+     * 实体对象转json对象
+     *
+     * @param webData
+     * @return
+     */
+    private JSONObject convert(WebData webData) {
         JSONObject object = new JSONObject();
         object.put("id", webData.getId());
         object.put("url", webData.getUrl());
@@ -47,7 +91,23 @@ public class WebDataController {
         object.put("replys", webData.getReplys());
         object.put("viewcount", webData.getViewcount());
         object.put("cContent", webData.getcContent());
-        return object.toJSONString();
+        return object;
+    }
+
+    /**
+     * 组装标准响应数据给前端。
+     *
+     * @param errCode   错误码，0代表无错误
+     * @param errMsg    错误描述，0的时候msg是ok
+     * @param data      若成功数据内容
+     * @return
+     */
+    private JSONObject buildResult(int errCode, String errMsg, Object data) {
+        JSONObject result = new JSONObject();
+        result.put("errCode", errCode);
+        result.put("errMsg", errMsg);
+        result.put("data", data);
+        return result;
     }
 
 }
