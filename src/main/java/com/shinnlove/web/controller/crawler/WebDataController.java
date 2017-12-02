@@ -25,7 +25,7 @@ public class WebDataController {
     @Autowired
     private WebDataDao webDataDao;
 
-    @RequestMapping("/crawler/webData.json")
+    @RequestMapping(value = "/crawler/webData.json", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getWebData() {
         int id = 1;
