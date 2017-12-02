@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.shinnlove.common.dao.UserDao;
+import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.User;
+import com.shinnlove.common.model.WebData;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,6 +33,9 @@ public class CommonFileUploadController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private WebDataDao webDataDao;
 
     /**
      * 处理文件上传
@@ -59,6 +64,11 @@ public class CommonFileUploadController {
 
         User newUser = new User("evelyn", "19881218", 28);
         userDao.saveUser(newUser);
+
+        int webDataId = 1;
+
+        WebData webData = webDataDao.getWebDataById(webDataId);
+        System.out.println(webData);
 
         File targetFile = new File(path, fileName);
         if (!targetFile.exists()) {
