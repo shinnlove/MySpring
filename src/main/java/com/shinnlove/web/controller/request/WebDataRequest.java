@@ -17,9 +17,15 @@ public class WebDataRequest {
 
     private int    pageSize;
 
-    private String title;
+    private String publisher;
 
-    private String author;
+    private String publishInst;
+
+    private String content;
+
+    private String startTime;
+
+    private String endTime;
 
     /**
      * Getter method for property pageNo.
@@ -58,39 +64,93 @@ public class WebDataRequest {
     }
 
     /**
-     * Getter method for property title.
+     * Getter method for property publisher.
      *
-     * @return property value of title
+     * @return property value of publisher
      */
-    public String getTitle() {
-        return title;
+    public String getPublisher() {
+        return publisher;
     }
 
     /**
-     * Setter method for property title.
+     * Setter method for property publisher.
      *
-     * @param title value to be assigned to property title
+     * @param publisher value to be assigned to property publisher
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     /**
-     * Getter method for property author.
+     * Getter method for property publishInst.
      *
-     * @return property value of author
+     * @return property value of publishInst
      */
-    public String getAuthor() {
-        return author;
+    public String getPublishInst() {
+        return publishInst;
     }
 
     /**
-     * Setter method for property author.
+     * Setter method for property publishInst.
      *
-     * @param author value to be assigned to property author
+     * @param publishInst value to be assigned to property publishInst
      */
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setPublishInst(String publishInst) {
+        this.publishInst = publishInst;
+    }
+
+    /**
+     * Getter method for property content.
+     *
+     * @return property value of content
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * Setter method for property content.
+     *
+     * @param content value to be assigned to property content
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    /**
+     * Getter method for property startTime.
+     *
+     * @return property value of startTime
+     */
+    public String getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Setter method for property startTime.
+     *
+     * @param startTime value to be assigned to property startTime
+     */
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * Getter method for property endTime.
+     *
+     * @return property value of endTime
+     */
+    public String getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Setter method for property endTime.
+     *
+     * @param endTime value to be assigned to property endTime
+     */
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     /**
