@@ -7,6 +7,7 @@ package com.shinnlove.common.dao;
 import java.util.List;
 
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.web.controller.request.WebDataRequest;
 
 /**
  * 网页数据查询DAO。
@@ -34,10 +35,11 @@ public interface WebDataDao {
     /**
      * 分页查询网页数据。
      *
+     * @param request
      * @param pageNo
      * @param pageSize
      * @return
      */
-    List<WebData> queryWebDataByPage(int pageNo, int pageSize);
+    List<WebData> queryWebDataByPage(WebDataRequest request, int pageNo, int pageSize);
 
 }

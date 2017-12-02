@@ -17,6 +17,8 @@ public class WebDataRequest {
 
     private int    pageSize;
 
+    private String title;
+
     private String publisher;
 
     private String publishInst;
@@ -61,6 +63,24 @@ public class WebDataRequest {
      */
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    /**
+     * Getter method for property title.
+     *
+     * @return property value of title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Setter method for property title.
+     *
+     * @param title value to be assigned to property title
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**

@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.web.controller.request.WebDataRequest;
 
 /**
  * 网页数据查询DAO实现。
@@ -68,7 +69,7 @@ public class WebDataDaoImpl implements WebDataDao {
     }
 
     @Override
-    public List<WebData> queryWebDataByPage(int pageNo, int pageSize) {
+    public List<WebData> queryWebDataByPage(WebDataRequest request, int pageNo, int pageSize) {
 
         List<WebData> webDataList = new ArrayList<>();
 
@@ -78,6 +79,14 @@ public class WebDataDaoImpl implements WebDataDao {
         Transaction tx = session.beginTransaction();
         try {
             Query query = session.createQuery(hql);
+
+            // 拼接参数
+            String publisher = request.getPublisher();
+            if (!"".equals(publisher)) {
+                hql += " where spidername=?";
+            }
+
+            query.setParameter(0, publisher);
 
             // 从第几条开始、每一查询返回多少数量
             query.setFirstResult((pageNo - 1) * pageSize);

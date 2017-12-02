@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -45,14 +45,18 @@ public class WebDataController {
      *
      * @return
      */
-    @RequestMapping(value = "/crawler/webDataList.json", produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/crawler/webDataList.json", method = { RequestMethod.GET,
+            RequestMethod.POST }, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getWebDataByPage(@RequestBody String paramKey) {
+    public String getWebDataByPage(String paramKey) {
         JSONObject result;
         try {
             WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
-            List<WebData> webDataList = webDataDao.queryWebDataByPage(request.getPageNo(),
+            List<WebData> webDataList = webDataDao.queryWebDataByPage(request, request.getPageNo(),
                 request.getPageSize());
+
+            //            List<WebData> webDataList = webDataDao.queryWebDataByPage(1, 10);
+
             JSONArray array = new JSONArray();
             for (WebData w : webDataList) {
                 JSONObject o = convert(w);
