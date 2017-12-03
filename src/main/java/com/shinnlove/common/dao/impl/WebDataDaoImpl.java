@@ -80,13 +80,13 @@ public class WebDataDaoImpl implements WebDataDao {
         try {
             Query query = session.createQuery(hql);
 
-            // 拼接参数
-            String publisher = request.getPublisher();
-            if (!"".equals(publisher)) {
-                hql += " where spidername=?";
-            }
-
-            query.setParameter(0, publisher);
+            //            // 拼接参数
+            //            String publisher = request.getPublisher();
+            //            if (!"".equals(publisher)) {
+            //                hql += " where spidername=?";
+            //            }
+            //
+            //            query.setParameter(0, publisher);
 
             // 从第几条开始、每一查询返回多少数量
             query.setFirstResult((pageNo - 1) * pageSize);
