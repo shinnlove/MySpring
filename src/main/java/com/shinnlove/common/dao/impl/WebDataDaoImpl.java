@@ -108,6 +108,33 @@ public class WebDataDaoImpl implements WebDataDao {
         return webDataList;
     }
 
+    @Override
+    public List<WebData> queryAllWebDataByPage(WebDataRequest request) {
+        List<WebData> webDataList = new ArrayList<>();
+
+        String hql = "from WebData";
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery(hql);
+
+            List list = query.list();
+            tx.commit();
+
+            // 转换
+            for (Object o : list) {
+                webDataList.add((WebData) o);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+
+        return webDataList;
+    }
+
     /**
      * Setter method for property sessionFactory.
      *

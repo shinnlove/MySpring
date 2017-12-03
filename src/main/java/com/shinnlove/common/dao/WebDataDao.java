@@ -42,4 +42,12 @@ public interface WebDataDao {
      */
     List<WebData> queryWebDataByPage(WebDataRequest request, int pageNo, int pageSize);
 
+    /**
+     * 查询所有网页数据，前端分页。
+     *
+     * @param request
+     * @return
+     */
+    List<WebData> queryAllWebDataByPage(WebDataRequest request);
+
 }

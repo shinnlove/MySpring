@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.web.controller.request.WebDataRequest;
 
 /**
  * 网页数据处理控制器。
@@ -49,11 +51,13 @@ public class WebDataController {
     public String getWebDataByPage(String paramKey) {
         JSONObject result;
         try {
-            //            WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
+            WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
             //            List<WebData> webDataList = webDataDao.queryWebDataByPage(request, request.getPageNo(),
             //                request.getPageSize());
 
-            List<WebData> webDataList = webDataDao.queryWebDataByPage(null, 1, 10);
+            //            List<WebData> webDataList = webDataDao.queryWebDataByPage(null, 1, 10);
+
+            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
 
             JSONArray array = new JSONArray();
             for (WebData w : webDataList) {
