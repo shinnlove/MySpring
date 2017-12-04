@@ -5,7 +5,9 @@
 package com.shinnlove.common.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -80,17 +82,84 @@ public class WebDataDaoImpl implements WebDataDao {
         try {
             Query query = session.createQuery(hql);
 
-            // 拼接参数
-            String publisher = request.getPublisher();
-            if (!"".equals(publisher)) {
-                hql += " where spidername=?";
-            }
-
-            query.setParameter(0, publisher);
+            //            // 拼接参数
+            //            String publisher = request.getPublisher();
+            //            if (!"".equals(publisher)) {
+            //                hql += " where spidername=?";
+            //            }
+            //
+            //            query.setParameter(0, publisher);
 
             // 从第几条开始、每一查询返回多少数量
             query.setFirstResult((pageNo - 1) * pageSize);
             query.setMaxResults(pageSize);
+
+            List list = query.list();
+            tx.commit();
+
+            // 转换
+            for (Object o : list) {
+                webDataList.add((WebData) o);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+
+        return webDataList;
+    }
+
+    @Override
+    public List<WebData> queryAllWebDataByPage(WebDataRequest request) {
+        List<WebData> webDataList = new ArrayList<>();
+
+        String sql = "from WebData t where 1=1 ";
+        StringBuilder sb = new StringBuilder();
+
+        // 查询key（必须和数据字段对应上）
+        List<Object> paramList = new ArrayList<Object>();
+
+        // 动态需要组装的查询参数Map
+        Map<String, Object> queryMap = new HashMap<String, Object>();
+        // 处理title
+        String title = request.getTitle();
+        if (title != null && !"".equals(title)) {
+            queryMap.put("title", title);
+        }
+        // 处理author
+        String publisher = request.getPublisher();
+        if (publisher != null && !"".equals(publisher)) {
+            queryMap.put("author", publisher);
+        }
+
+        if (!queryMap.isEmpty()) {
+            for (String key : queryMap.keySet()) {
+                if (!"".equals(queryMap.get(key))) {
+                    paramList.add(queryMap.get(key));
+                    sb.append("and t." + key + " = ? ");
+                }
+            }
+        }
+        final Object[] objectArr = paramList.toArray();
+        final String hql = sql + sb.toString() + "order by t.id";
+        final String sqlcount = "select count(*) " + hql;
+
+        final int pageNo = request.getPageNo();
+        final int pageSize = request.getPageSize();
+
+        //        String hql = "from WebData";
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery(hql);
+
+            //            query.setFirstResult((pageNo-1)*pageSize);
+            //            query.setMaxResults(pageSize);
+            for (int i = 0; i < objectArr.length; i++) {
+                query.setParameter(i, objectArr[i]);
+            }
 
             List list = query.list();
             tx.commit();

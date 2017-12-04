@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    hello, spring mvc index.
+    <%--hello, spring mvc index.--%>
     <div id="root"></div>
     <script src="./js/common.js"></script>
     <script src="./js/index.js"></script>

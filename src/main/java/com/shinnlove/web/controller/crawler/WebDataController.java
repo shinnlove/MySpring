@@ -52,10 +52,12 @@ public class WebDataController {
         JSONObject result;
         try {
             WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
-            List<WebData> webDataList = webDataDao.queryWebDataByPage(request, request.getPageNo(),
-                request.getPageSize());
+            //            List<WebData> webDataList = webDataDao.queryWebDataByPage(request, request.getPageNo(),
+            //                request.getPageSize());
 
-            //            List<WebData> webDataList = webDataDao.queryWebDataByPage(1, 10);
+            //            List<WebData> webDataList = webDataDao.queryWebDataByPage(null, 1, 10);
+
+            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
 
             JSONArray array = new JSONArray();
             for (WebData w : webDataList) {
