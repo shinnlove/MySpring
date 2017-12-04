@@ -99,7 +99,7 @@
     <jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.impl.HelloServiceImpl"
                     address="/HelloWorld"/>
 
-    <!-- 配置定时任务调度 -->
+    <!-- 配置定时任务调度，注意xml配置不要使用autowire，容易引起数据源注入问题 -->
     <bean id="quartzScheduler"
           class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
         <property name="triggers">
@@ -109,7 +109,7 @@
         </property>
     </bean>
 
-    <!-- 每小时执行一次 -->
+    <!-- 定时策略：采用cronTrigger策略，这里每5秒执行一次任务 -->
     <bean id="myBizTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail">
             <ref bean="myBizJob" />
@@ -119,7 +119,7 @@
         </property>
     </bean>
 
-    <!-- 配置quartz调度， 定时增量刷新报表缓存 -->
+    <!-- 配置quartz调度的bean和执行的方法、是否并发执行 -->
     <bean id="myBizJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
@@ -133,7 +133,7 @@
         </property>
     </bean>
 
-    <!-- 业务定时任务 -->
+    <!-- 业务定时任务类，定义了定时执行的具体动作 -->
     <bean id="myIntervalJob"
           class="com.shinnlove.biz.service.interval.job.MyIntervalJob" />
 
