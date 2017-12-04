@@ -99,4 +99,42 @@
     <jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.impl.HelloServiceImpl"
                     address="/HelloWorld"/>
 
+    <!-- 配置定时任务调度 -->
+    <bean id="quartzScheduler"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
+        <property name="triggers">
+            <list>
+                <ref bean="myBizTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- 每小时执行一次 -->
+    <bean id="myBizTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="myBizJob" />
+        </property>
+        <property name="cronExpression">
+            <value>0/5 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 配置quartz调度， 定时增量刷新报表缓存 -->
+    <bean id="myBizJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="myIntervalJob" />
+        </property>
+        <property name="targetMethod">
+            <value>queryWeChatPayBill</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+
+    <!-- 业务定时任务 -->
+    <bean id="myIntervalJob"
+          class="com.shinnlove.biz.service.interval.job.MyIntervalJob" />
+
 </beans>
