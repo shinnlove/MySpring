@@ -199,8 +199,9 @@ public class WebDataDaoImpl implements WebDataDao {
         Transaction tx = session.beginTransaction();
 
         Criteria criteria = session.createCriteria(WebData.class);
-        List<WebData> webDataList = criteria.add(Restrictions.like("title", "关于%")).list();
-        System.out.println(webDataList);
+        List<WebData> webDataList = criteria.add(Restrictions.like("title", "%关于%")).list();
+
+        System.out.println("查询到" + webDataList);
 
         try {
             Query query = session.createQuery(hql);
