@@ -32,6 +32,9 @@ public class WebDataDaoImpl implements WebDataDao {
     /** hibernate session工厂 */
     private SessionFactory sessionFactory;
 
+    /**
+     * @see com.shinnlove.common.dao.WebDataDao#saveWebData(WebData)
+     */
     @Override
     public void saveWebData(WebData webData) {
 //        Session session = sessionFactory.getCurrentSession();
@@ -45,6 +48,9 @@ public class WebDataDaoImpl implements WebDataDao {
 //        }
     }
 
+    /**
+     * @see com.shinnlove.common.dao.WebDataDao#getWebDataById(int)
+     */
     @Override
     public WebData getWebDataById(int id) {
         // 事务对象
@@ -72,6 +78,9 @@ public class WebDataDaoImpl implements WebDataDao {
         return webData;
     }
 
+    /**
+     * @see com.shinnlove.common.dao.WebDataDao#queryWebDataByPage(WebDataRequest, int, int)
+     */
     @Override
     public List<WebData> queryWebDataByPage(WebDataRequest request, int pageNo, int pageSize) {
 
@@ -112,6 +121,9 @@ public class WebDataDaoImpl implements WebDataDao {
         return webDataList;
     }
 
+    /**
+     * @see com.shinnlove.common.dao.WebDataDao#queryAllWebDataByPage(WebDataRequest)
+     */
     @Override
     public List<WebData> queryAllWebDataByPage(WebDataRequest request) {
 
@@ -219,6 +231,30 @@ public class WebDataDaoImpl implements WebDataDao {
 //            tx.rollback();
 //        }
 //        return webDataList;
+    }
+
+    /**
+     * @see com.shinnlove.common.dao.WebDataDao#queryAllWebDataCount()
+     */
+    @Override
+    public long queryAllWebDataCount() {
+        Long count = 0L;
+        String hql = "select count(*) from WebData";
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery(hql);
+
+            count = (Long) query.uniqueResult();
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+
+        return count;
     }
 
     /**

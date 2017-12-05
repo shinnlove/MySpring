@@ -146,12 +146,12 @@ public class TestWeChatPay {
     }
 
     /**
-     * 对账单下载
+     * 对账单下载，只能下载3个月内的对账单，超过就会报invalid bill date的错误。
      * 已测试
      */
     public void doDownloadBill() {
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("bill_date", "20161102");
+        data.put("bill_date", "20171201");
         data.put("bill_type", "ALL");
         try {
             Map<String, String> r = wxpay.downloadBill(data);
@@ -239,7 +239,7 @@ public class TestWeChatPay {
 
         // dodo.doUnifiedOrder();
         // dodo.doOrderQuery();
-        // dodo.doDownloadBill();
+        dodo.doDownloadBill();
         // dodo.doShortUrl();
         // dodo.test001();
         // dodo.doOrderQuery();
@@ -250,7 +250,7 @@ public class TestWeChatPay {
         // dodo.test001();
         // dodo.testUnifiedOrderSpeed();
 
-        dodo.doOrderQuery();
+//        dodo.doOrderQuery();
         //        dodo.doOrderReverse();
         //        dodo.doOrderQuery();
         //        dodo.doOrderReverse();

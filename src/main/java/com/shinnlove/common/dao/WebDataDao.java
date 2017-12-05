@@ -50,4 +50,11 @@ public interface WebDataDao {
      */
     List<WebData> queryAllWebDataByPage(WebDataRequest request);
 
+    /**
+     * 查询数据库中有多少网页数据。
+     * 
+     * @return
+     */
+    long queryAllWebDataCount();
+
 }
