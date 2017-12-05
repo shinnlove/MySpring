@@ -4,6 +4,7 @@
  */
 package com.shinnlove.web.controller.crawler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,12 @@ public class WebDataController {
 
             //            List<WebData> webDataList = webDataDao.queryWebDataByPage(null, 1, 10);
 
-            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
+            // 查询总的数据条数
+            Long count = webDataDao.queryAllWebDataCount();
+
+            // 这一步查询太卡了，为了看count，就直接new一个空的list
+            //            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
+            List<WebData> webDataList = new ArrayList<WebData>();
 
             JSONArray array = new JSONArray();
             for (WebData w : webDataList) {
@@ -65,7 +71,7 @@ public class WebDataController {
                 array.add(o);
             }
 
-            result = buildResult(0, "ok", array);
+            result = buildResult(0, "ok", array, count);
         } catch (Exception e) {
             result = buildResult(-1, "System Error:" + e.getMessage(), null);
         }
@@ -113,6 +119,24 @@ public class WebDataController {
         result.put("errCode", errCode);
         result.put("errMsg", errMsg);
         result.put("data", data);
+        return result;
+    }
+
+    /**
+     * 组装标准响应数据给前端。
+     *
+     * @param errCode   错误码，0代表无错误
+     * @param errMsg    错误描述，0的时候msg是ok
+     * @param data      若成功数据内容
+     * @param total     总数量
+     * @return
+     */
+    private JSONObject buildResult(int errCode, String errMsg, Object data, Long total) {
+        JSONObject result = new JSONObject();
+        result.put("errCode", errCode);
+        result.put("errMsg", errMsg);
+        result.put("data", data);
+        result.put("total", total);
         return result;
     }
 
