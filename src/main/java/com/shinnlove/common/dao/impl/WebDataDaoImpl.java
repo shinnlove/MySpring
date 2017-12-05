@@ -19,6 +19,7 @@ import com.shinnlove.common.model.WebData;
 import com.shinnlove.web.controller.request.WebDataRequest;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -155,6 +156,7 @@ public class WebDataDaoImpl implements WebDataDao {
 //                    .add(Restrictions.like("medianame","%%"))
                     .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
                     .add(creterion)
+                    .addOrder(Order.desc("pubtime"))
                     .list();
 
             tx.commit();
@@ -235,7 +237,7 @@ public class WebDataDaoImpl implements WebDataDao {
     }
 
     /**
-     * @see com.shinnlove.common.dao.WebDataDao#queryAllWebDataCount()
+     * @see com.shinnlove.common.dao.WebDataDao#queryAllWebDataCount(WebDataRequest)
      */
     @Override
     public long queryAllWebDataCount( WebDataRequest request) {
@@ -258,7 +260,9 @@ public class WebDataDaoImpl implements WebDataDao {
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
 
-        List<WebData> webDataList = new ArrayList<WebData>();
+//        List<WebData> webDataList = new ArrayList<WebData>();
+
+        long result = 0;
 
         try {
             String strStartTime = ( request.getStartTime() == null) ? "2000-01-01": request.getStartTime().substring(0,10);
@@ -273,21 +277,21 @@ public class WebDataDaoImpl implements WebDataDao {
             Criteria criteria = session.createCriteria(WebData.class);
 
             // 查询结果
-            webDataList = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
+            result = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
                     .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
                     .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
                     //  mysql数据库中该字段为空无法判断
 //                    .add(Restrictions.like("medianame","%%"))
                     .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
                     .add(creterion)
-                    .list();
+                    .list().size();
 
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
         }
-        return webDataList.size();
+        return result;
     }
 
     /**
