@@ -148,7 +148,8 @@ public class WebDataDaoImpl implements WebDataDao {
             criteria.setMaxResults(request.getPageSize());
 
             // 查询结果
-            webDataList = criteria.add(Restrictions.like("title", "%"+request.getTitle()+"%"))
+            webDataList = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
+                    .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
                     .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
                         //  mysql数据库中该字段为空无法判断
 //                    .add(Restrictions.like("medianame","%%"))
@@ -237,24 +238,56 @@ public class WebDataDaoImpl implements WebDataDao {
      * @see com.shinnlove.common.dao.WebDataDao#queryAllWebDataCount()
      */
     @Override
-    public long queryAllWebDataCount() {
-        Long count = 0L;
-        String hql = "select count(*) from WebData";
+    public long queryAllWebDataCount( WebDataRequest request) {
+//        Long count = 0L;
+//        String hql = "select count(*) from WebData";
+//
+//        Session session = sessionFactory.getCurrentSession();
+//        Transaction tx = session.beginTransaction();
+//        try {
+//            Query query = session.createQuery(hql);
+//
+//            count = (Long) query.uniqueResult();
+//            tx.commit();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            tx.rollback();
+//        }
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
+
+        List<WebData> webDataList = new ArrayList<WebData>();
+
         try {
-            Query query = session.createQuery(hql);
+            String strStartTime = ( request.getStartTime() == null) ? "2000-01-01": request.getStartTime().substring(0,10);
+            String strEndTime = (request.getEndTime() == null)? new SimpleDateFormat("yyyy-MM-dd").format(new Date()):request.getEndTime().substring(0,10);
 
-            count = (Long) query.uniqueResult();
+            Date startDate = java.sql.Date.valueOf(strStartTime);
+
+            Date endDate = java.sql.Date.valueOf(strEndTime);
+
+            Criterion creterion = Expression.between("pubtime",startDate,endDate);
+
+            Criteria criteria = session.createCriteria(WebData.class);
+
+            // 查询结果
+            webDataList = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
+                    .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
+                    .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
+                    //  mysql数据库中该字段为空无法判断
+//                    .add(Restrictions.like("medianame","%%"))
+                    .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
+                    .add(creterion)
+                    .list();
+
             tx.commit();
-
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
         }
-
-        return count;
+        return webDataList.size();
     }
 
     /**
