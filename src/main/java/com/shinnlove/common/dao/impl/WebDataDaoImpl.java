@@ -9,10 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
@@ -199,12 +197,16 @@ public class WebDataDaoImpl implements WebDataDao {
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(WebData.class);
+        List<WebData> webDataList = criteria.add(Restrictions.like("title", "关于%")).list();
+        System.out.println(webDataList);
+
         try {
             Query query = session.createQuery(hql);
 
             count = (Long) query.uniqueResult();
             tx.commit();
-
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
