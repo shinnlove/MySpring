@@ -115,7 +115,7 @@
             <ref bean="myBizJob" />
         </property>
         <property name="cronExpression">
-            <value>0/5 * * * * ?</value>
+            <value>0/30 * * * * ?</value>
         </property>
     </bean>
 

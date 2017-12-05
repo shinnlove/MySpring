@@ -134,8 +134,10 @@ public class WebDataDaoImpl implements WebDataDao {
         List<WebData> webDataList = new ArrayList<WebData>();
 
         try {
-            String strStartTime = ( request.getStartTime() == null) ? "2000-01-01": request.getStartTime().substring(0,10);
-            String strEndTime = (request.getEndTime() == null)? new SimpleDateFormat("yyyy-MM-dd").format(new Date()):request.getEndTime().substring(0,10);
+            String strStartTime = (request.getStartTime() == null) ? "2000-01-01" : request
+                .getStartTime().substring(0, 10);
+            String strEndTime = (request.getEndTime() == null) ? new SimpleDateFormat("yyyy-MM-dd")
+                .format(new Date()) : request.getEndTime().substring(0, 10);
 
             Date startDate = java.sql.Date.valueOf(strStartTime);
 
@@ -145,7 +147,7 @@ public class WebDataDaoImpl implements WebDataDao {
 
             Criteria criteria = session.createCriteria(WebData.class);
 
-            criteria.setFirstResult( (request.getPageNo() - 1) *request.getPageSize());
+            criteria.setFirstResult((request.getPageNo() - 1) * request.getPageSize());
             criteria.setMaxResults(request.getPageSize());
 
             // 查询结果
@@ -166,96 +168,96 @@ public class WebDataDaoImpl implements WebDataDao {
         }
         return webDataList;
 
-//        Iterator iterator =  webDataList.iterator();
-//        while(iterator.hasNext()) {
-//            WebData webData = (WebData) iterator.next();
-//            System.out.println(webData.getId() + webData.getAuthor());
-//        }
-//
-//        List<WebData> webDataList = new ArrayList<>();
-//
-//        String sql = "from WebData t where 1=1 ";
-//        StringBuilder sb = new StringBuilder();
-//
-//        // 查询key（必须和数据字段对应上）
-//        List<Object> paramList = new ArrayList<Object>();
-//
-//        // 动态需要组装的查询参数Map
-//        Map<String, Object> queryMap = new HashMap<String, Object>();
-//        // 处理title
-//        String title = request.getTitle();
-//        if (title != null && !"".equals(title)) {
-//            queryMap.put("title", title);
-//        }
-//        // 处理author
-//        String publisher = request.getPublisher();
-//        if (publisher != null && !"".equals(publisher)) {
-//            queryMap.put("author", publisher);
-//        }
-//
-//        if (!queryMap.isEmpty()) {
-//            for (String key : queryMap.keySet()) {
-//                if (!"".equals(queryMap.get(key))) {
-//                    paramList.add(queryMap.get(key));
-//                    sb.append("and t." + key + " = ? ");
-//                }
-//            }
-//        }
-//        final Object[] objectArr = paramList.toArray();
-//        final String hql = sql + sb.toString() + "order by t.id";
-//        final String sqlcount = "select count(*) " + hql;
-//
-//        final int pageNo = request.getPageNo();
-//        final int pageSize = request.getPageSize();
-//
-//        //        String hql = "from WebData";
-//
-////        Session session = sessionFactory.getCurrentSession();
-////        Transaction tx = session.beginTransaction();
-//        try {
-//            Query query = session.createQuery(hql);
-//
-//            //            query.setFirstResult((pageNo-1)*pageSize);
-//            //            query.setMaxResults(pageSize);
-//            for (int i = 0; i < objectArr.length; i++) {
-//                query.setParameter(i, objectArr[i]);
-//            }
-//
-//            List list = query.list();
-//            tx.commit();
-//
-//            // 转换
-//            for (Object o : list) {
-//                webDataList.add((WebData) o);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            tx.rollback();
-//        }
-//        return webDataList;
+        //        Iterator iterator =  webDataList.iterator();
+        //        while(iterator.hasNext()) {
+        //            WebData webData = (WebData) iterator.next();
+        //            System.out.println(webData.getId() + webData.getAuthor());
+        //        }
+        //
+        //        List<WebData> webDataList = new ArrayList<>();
+        //
+        //        String sql = "from WebData t where 1=1 ";
+        //        StringBuilder sb = new StringBuilder();
+        //
+        //        // 查询key（必须和数据字段对应上）
+        //        List<Object> paramList = new ArrayList<Object>();
+        //
+        //        // 动态需要组装的查询参数Map
+        //        Map<String, Object> queryMap = new HashMap<String, Object>();
+        //        // 处理title
+        //        String title = request.getTitle();
+        //        if (title != null && !"".equals(title)) {
+        //            queryMap.put("title", title);
+        //        }
+        //        // 处理author
+        //        String publisher = request.getPublisher();
+        //        if (publisher != null && !"".equals(publisher)) {
+        //            queryMap.put("author", publisher);
+        //        }
+        //
+        //        if (!queryMap.isEmpty()) {
+        //            for (String key : queryMap.keySet()) {
+        //                if (!"".equals(queryMap.get(key))) {
+        //                    paramList.add(queryMap.get(key));
+        //                    sb.append("and t." + key + " = ? ");
+        //                }
+        //            }
+        //        }
+        //        final Object[] objectArr = paramList.toArray();
+        //        final String hql = sql + sb.toString() + "order by t.id";
+        //        final String sqlcount = "select count(*) " + hql;
+        //
+        //        final int pageNo = request.getPageNo();
+        //        final int pageSize = request.getPageSize();
+        //
+        //        //        String hql = "from WebData";
+        //
+        ////        Session session = sessionFactory.getCurrentSession();
+        ////        Transaction tx = session.beginTransaction();
+        //        try {
+        //            Query query = session.createQuery(hql);
+        //
+        //            //            query.setFirstResult((pageNo-1)*pageSize);
+        //            //            query.setMaxResults(pageSize);
+        //            for (int i = 0; i < objectArr.length; i++) {
+        //                query.setParameter(i, objectArr[i]);
+        //            }
+        //
+        //            List list = query.list();
+        //            tx.commit();
+        //
+        //            // 转换
+        //            for (Object o : list) {
+        //                webDataList.add((WebData) o);
+        //            }
+        //
+        //        } catch (Exception e) {
+        //            e.printStackTrace();
+        //            tx.rollback();
+        //        }
+        //        return webDataList;
     }
 
     /**
      * @see com.shinnlove.common.dao.WebDataDao#queryAllWebDataCount(WebDataRequest)
      */
     @Override
-    public long queryAllWebDataCount( WebDataRequest request) {
-//        Long count = 0L;
-//        String hql = "select count(*) from WebData";
-//
-//        Session session = sessionFactory.getCurrentSession();
-//        Transaction tx = session.beginTransaction();
-//        try {
-//            Query query = session.createQuery(hql);
-//
-//            count = (Long) query.uniqueResult();
-//            tx.commit();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            tx.rollback();
-//        }
+    public long queryAllWebDataCount(WebDataRequest request) {
+        //        Long count = 0L;
+        //        String hql = "select count(*) from WebData";
+        //
+        //        Session session = sessionFactory.getCurrentSession();
+        //        Transaction tx = session.beginTransaction();
+        //        try {
+        //            Query query = session.createQuery(hql);
+        //
+        //            count = (Long) query.uniqueResult();
+        //            tx.commit();
+        //
+        //        } catch (Exception e) {
+        //            e.printStackTrace();
+        //            tx.rollback();
+        //        }
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
@@ -265,14 +267,16 @@ public class WebDataDaoImpl implements WebDataDao {
         long result = 0;
 
         try {
-            String strStartTime = ( request.getStartTime() == null) ? "2000-01-01": request.getStartTime().substring(0,10);
-            String strEndTime = (request.getEndTime() == null)? new SimpleDateFormat("yyyy-MM-dd").format(new Date()):request.getEndTime().substring(0,10);
+            String strStartTime = (request.getStartTime() == null) ? "2000-01-01" : request
+                .getStartTime().substring(0, 10);
+            String strEndTime = (request.getEndTime() == null) ? new SimpleDateFormat("yyyy-MM-dd")
+                .format(new Date()) : request.getEndTime().substring(0, 10);
 
             Date startDate = java.sql.Date.valueOf(strStartTime);
 
             Date endDate = java.sql.Date.valueOf(strEndTime);
 
-            Criterion creterion = Expression.between("pubtime",startDate,endDate);
+            Criterion creterion = Expression.between("pubtime", startDate, endDate);
 
             Criteria criteria = session.createCriteria(WebData.class);
 

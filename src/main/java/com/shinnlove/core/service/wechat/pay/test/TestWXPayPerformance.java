@@ -4,13 +4,13 @@
  */
 package com.shinnlove.core.service.wechat.pay.test;
 
-import com.shinnlove.core.service.wechat.pay.config.impl.WXPayConfigImpl;
-import com.shinnlove.core.service.wechat.pay.core.WXPay;
-import com.shinnlove.core.service.wechat.pay.util.WXPayUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.shinnlove.core.service.wechat.pay.config.impl.WXPayConfigImpl;
+import com.shinnlove.core.service.wechat.pay.core.WXPay;
+import com.shinnlove.core.service.wechat.pay.util.WXPayUtil;
 
 /**
  * @author shinnlove.jinsheng
@@ -80,10 +80,10 @@ public class TestWXPayPerformance {
 
     public void doMicropayWithPos() {
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("out_trade_no", "1493279484111-1");
-        data.put("body", "测试");
+        data.put("out_trade_no", "shinnlove123456");
+        data.put("body", "测试java刷卡支付");
         data.put("total_fee", "1");
-        data.put("auth_code", "130063802586380514");
+        data.put("auth_code", "134686025935387907");
         try {
             Map<String, String> r = wxpay.microPayWithPos(data);
             System.out.println(r);
@@ -165,7 +165,7 @@ public class TestWXPayPerformance {
      */
     public void doDownloadBill() {
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("bill_date", "20161102");
+        data.put("bill_date", "20171204");
         data.put("bill_type", "ALL");
         try {
             Map<String, String> r = wxpay.downloadBill(data);
@@ -312,10 +312,12 @@ public class TestWXPayPerformance {
         System.out.println("--------------->");
         TestWXPayPerformance dodo = new TestWXPayPerformance();
 
-        dodo.doUnifiedOrder();
-        dodo.doRefund();
+        //        dodo.doUnifiedOrder();
+        //        dodo.doRefund();
 
-        // dodo.doMicropayWithPos();
+        //        dodo.doMicropayWithPos();
+
+        dodo.doDownloadBill();
 
         // dodo.testUnifiedOrderSpeed();
         // dodo.testUnifiedOrderSpeedWithMultiThread();
