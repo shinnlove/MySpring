@@ -4,11 +4,11 @@
  */
 package com.shinnlove.common.dao.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +17,9 @@ import org.hibernate.Transaction;
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
 import com.shinnlove.web.controller.request.WebDataRequest;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * 网页数据查询DAO实现。
@@ -34,15 +37,15 @@ public class WebDataDaoImpl implements WebDataDao {
      */
     @Override
     public void saveWebData(WebData webData) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.save(webData);
-            tx.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            tx.rollback();
-        }
+//        Session session = sessionFactory.getCurrentSession();
+//        Transaction tx = session.beginTransaction();
+//        try {
+//            session.save(webData);
+//            tx.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            tx.rollback();
+//        }
     }
 
     /**
@@ -72,7 +75,6 @@ public class WebDataDaoImpl implements WebDataDao {
                 tx = null;
             }
         }
-
         return webData;
     }
 
@@ -124,93 +126,168 @@ public class WebDataDaoImpl implements WebDataDao {
      */
     @Override
     public List<WebData> queryAllWebDataByPage(WebDataRequest request) {
-        List<WebData> webDataList = new ArrayList<>();
-
-        String sql = "from WebData t where 1=1 ";
-        StringBuilder sb = new StringBuilder();
-
-        // 查询key（必须和数据字段对应上）
-        List<Object> paramList = new ArrayList<Object>();
-
-        // 动态需要组装的查询参数Map
-        Map<String, Object> queryMap = new HashMap<String, Object>();
-        // 处理title
-        String title = request.getTitle();
-        if (title != null && !"".equals(title)) {
-            queryMap.put("title", title);
-        }
-        // 处理author
-        String publisher = request.getPublisher();
-        if (publisher != null && !"".equals(publisher)) {
-            queryMap.put("author", publisher);
-        }
-
-        if (!queryMap.isEmpty()) {
-            for (String key : queryMap.keySet()) {
-                if (!"".equals(queryMap.get(key))) {
-                    paramList.add(queryMap.get(key));
-                    sb.append("and t." + key + " = ? ");
-                }
-            }
-        }
-        final Object[] objectArr = paramList.toArray();
-        final String hql = sql + sb.toString() + "order by t.id";
-        final String sqlcount = "select count(*) " + hql;
-
-        final int pageNo = request.getPageNo();
-        final int pageSize = request.getPageSize();
-
-        //        String hql = "from WebData";
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
+
+        List<WebData> webDataList = new ArrayList<WebData>();
+
         try {
-            Query query = session.createQuery(hql);
+            String strStartTime = ( request.getStartTime() == null) ? "2000-01-01": request.getStartTime().substring(0,10);
+            String strEndTime = (request.getEndTime() == null)? new SimpleDateFormat("yyyy-MM-dd").format(new Date()):request.getEndTime().substring(0,10);
 
-            //            query.setFirstResult((pageNo-1)*pageSize);
-            //            query.setMaxResults(pageSize);
-            for (int i = 0; i < objectArr.length; i++) {
-                query.setParameter(i, objectArr[i]);
-            }
+            Date startDate = java.sql.Date.valueOf(strStartTime);
 
-            List list = query.list();
+            Date endDate = java.sql.Date.valueOf(strEndTime);
+
+            Criterion creterion = Expression.between("pubtime",startDate,endDate);
+
+            Criteria criteria = session.createCriteria(WebData.class);
+
+            criteria.setFirstResult( (request.getPageNo() - 1) *request.getPageSize());
+            criteria.setMaxResults(request.getPageSize());
+
+            // 查询结果
+            webDataList = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
+                    .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
+                    .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
+                        //  mysql数据库中该字段为空无法判断
+//                    .add(Restrictions.like("medianame","%%"))
+                    .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
+                    .add(creterion)
+                    .list();
+
             tx.commit();
-
-            // 转换
-            for (Object o : list) {
-                webDataList.add((WebData) o);
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
         }
-
         return webDataList;
+
+//        Iterator iterator =  webDataList.iterator();
+//        while(iterator.hasNext()) {
+//            WebData webData = (WebData) iterator.next();
+//            System.out.println(webData.getId() + webData.getAuthor());
+//        }
+//
+//        List<WebData> webDataList = new ArrayList<>();
+//
+//        String sql = "from WebData t where 1=1 ";
+//        StringBuilder sb = new StringBuilder();
+//
+//        // 查询key（必须和数据字段对应上）
+//        List<Object> paramList = new ArrayList<Object>();
+//
+//        // 动态需要组装的查询参数Map
+//        Map<String, Object> queryMap = new HashMap<String, Object>();
+//        // 处理title
+//        String title = request.getTitle();
+//        if (title != null && !"".equals(title)) {
+//            queryMap.put("title", title);
+//        }
+//        // 处理author
+//        String publisher = request.getPublisher();
+//        if (publisher != null && !"".equals(publisher)) {
+//            queryMap.put("author", publisher);
+//        }
+//
+//        if (!queryMap.isEmpty()) {
+//            for (String key : queryMap.keySet()) {
+//                if (!"".equals(queryMap.get(key))) {
+//                    paramList.add(queryMap.get(key));
+//                    sb.append("and t." + key + " = ? ");
+//                }
+//            }
+//        }
+//        final Object[] objectArr = paramList.toArray();
+//        final String hql = sql + sb.toString() + "order by t.id";
+//        final String sqlcount = "select count(*) " + hql;
+//
+//        final int pageNo = request.getPageNo();
+//        final int pageSize = request.getPageSize();
+//
+//        //        String hql = "from WebData";
+//
+////        Session session = sessionFactory.getCurrentSession();
+////        Transaction tx = session.beginTransaction();
+//        try {
+//            Query query = session.createQuery(hql);
+//
+//            //            query.setFirstResult((pageNo-1)*pageSize);
+//            //            query.setMaxResults(pageSize);
+//            for (int i = 0; i < objectArr.length; i++) {
+//                query.setParameter(i, objectArr[i]);
+//            }
+//
+//            List list = query.list();
+//            tx.commit();
+//
+//            // 转换
+//            for (Object o : list) {
+//                webDataList.add((WebData) o);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            tx.rollback();
+//        }
+//        return webDataList;
     }
 
     /**
      * @see com.shinnlove.common.dao.WebDataDao#queryAllWebDataCount()
      */
     @Override
-    public long queryAllWebDataCount() {
-        Long count = 0L;
-        String hql = "select count(*) from WebData";
+    public long queryAllWebDataCount( WebDataRequest request) {
+//        Long count = 0L;
+//        String hql = "select count(*) from WebData";
+//
+//        Session session = sessionFactory.getCurrentSession();
+//        Transaction tx = session.beginTransaction();
+//        try {
+//            Query query = session.createQuery(hql);
+//
+//            count = (Long) query.uniqueResult();
+//            tx.commit();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            tx.rollback();
+//        }
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
+
+        List<WebData> webDataList = new ArrayList<WebData>();
+
         try {
-            Query query = session.createQuery(hql);
+            String strStartTime = ( request.getStartTime() == null) ? "2000-01-01": request.getStartTime().substring(0,10);
+            String strEndTime = (request.getEndTime() == null)? new SimpleDateFormat("yyyy-MM-dd").format(new Date()):request.getEndTime().substring(0,10);
 
-            count = (Long) query.uniqueResult();
+            Date startDate = java.sql.Date.valueOf(strStartTime);
+
+            Date endDate = java.sql.Date.valueOf(strEndTime);
+
+            Criterion creterion = Expression.between("pubtime",startDate,endDate);
+
+            Criteria criteria = session.createCriteria(WebData.class);
+
+            // 查询结果
+            webDataList = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
+                    .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
+                    .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
+                    //  mysql数据库中该字段为空无法判断
+//                    .add(Restrictions.like("medianame","%%"))
+                    .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
+                    .add(creterion)
+                    .list();
+
             tx.commit();
-
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
         }
-
-        return count;
+        return webDataList.size();
     }
 
     /**

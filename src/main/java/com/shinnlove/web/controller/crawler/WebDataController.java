@@ -59,11 +59,10 @@ public class WebDataController {
             //            List<WebData> webDataList = webDataDao.queryWebDataByPage(null, 1, 10);
 
             // 查询总的数据条数
-            Long count = webDataDao.queryAllWebDataCount();
+            Long count = webDataDao.queryAllWebDataCount(request);
 
             // 这一步查询太卡了，为了看count，就直接new一个空的list
-            //            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
-            List<WebData> webDataList = new ArrayList<WebData>();
+            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
 
             JSONArray array = new JSONArray();
             for (WebData w : webDataList) {
