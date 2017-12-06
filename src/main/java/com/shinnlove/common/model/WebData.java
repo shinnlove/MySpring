@@ -8,6 +8,9 @@ import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.NamedQuery;
+
+import javax.persistence.Entity;
 
 /**
  * webData对象。
@@ -15,6 +18,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author shinnlove.jinsheng
  * @version $Id: WebData.java, v 0.1 2017-12-02 下午12:42 shinnlove.jinsheng Exp $$
  */
+@Entity
+@NamedQuery(name = "myNamedQuery", query = "from WebData as w where w.title = ?")
 public class WebData {
 
     private int    id;
