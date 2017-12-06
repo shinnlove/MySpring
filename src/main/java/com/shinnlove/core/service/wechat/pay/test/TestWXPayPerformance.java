@@ -165,7 +165,7 @@ public class TestWXPayPerformance {
      */
     public void doDownloadBill() {
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("bill_date", "20171204");
+        data.put("bill_date", "20171205");
         data.put("bill_type", "ALL");
         try {
             Map<String, String> r = wxpay.downloadBill(data);
