@@ -4,10 +4,12 @@
  */
 package com.shinnlove.core.service.wechat.pay.http;
 
-import com.shinnlove.core.service.wechat.pay.config.WXPayConfig;
-import com.shinnlove.core.service.wechat.pay.domain.model.DomainInfo;
-import com.shinnlove.core.service.wechat.pay.report.WXPayReport;
-import com.shinnlove.core.service.wechat.pay.util.WXPayUtil;
+import java.io.*;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.security.KeyStore;
+import java.security.SecureRandom;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,13 +26,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
+import com.shinnlove.core.service.wechat.pay.config.WXPayConfig;
+import com.shinnlove.core.service.wechat.pay.domain.model.DomainInfo;
+import com.shinnlove.core.service.wechat.pay.report.WXPayReport;
+import com.shinnlove.core.service.wechat.pay.util.WXPayUtil;
+
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import java.io.InputStream;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.security.KeyStore;
-import java.security.SecureRandom;
 
 /**
  * @author shinnlove.jinsheng
@@ -118,8 +120,46 @@ public class WXPayRequest {
 
         HttpResponse httpResponse = httpClient.execute(httpPost);
         HttpEntity httpEntity = httpResponse.getEntity();
+
+        //        String responseResult = handleResponse(httpResponse, "UTF-8");
+        //        return responseResult;
+
         return EntityUtils.toString(httpEntity, "UTF-8");
 
+    }
+
+    /**
+     * 缓冲方式读取HttpResponse中的内容，这种方式读取的数据会让换行符丢失。
+     * 
+     * @param httpResponse
+     * @param defaultCharset
+     * @return
+     */
+    private String handleResponse(HttpResponse httpResponse, String defaultCharset) {
+        HttpEntity httpEntity = httpResponse.getEntity();
+        InputStream stream = null;
+        try {
+            stream = httpEntity.getContent();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        StringBuffer sbContent = new StringBuffer();
+        BufferedReader reader;
+        String line;
+        try {
+            reader = new BufferedReader(new InputStreamReader(stream, defaultCharset));
+            while ((line = reader.readLine()) != null) {
+                // 如果采用这种方式读取数据，那么readLine将会将\r\n这些字符过滤掉，而EntityUtils.toString则不会
+                sbContent.append(line);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return sbContent.toString();
     }
 
     private String request(String urlSuffix, String uuid, String data, int connectTimeoutMs, int readTimeoutMs, boolean useCert, boolean autoReport) throws Exception {

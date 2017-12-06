@@ -4,6 +4,7 @@
  */
 package com.shinnlove.core.service.wechat.pay.test;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -170,11 +171,37 @@ public class TestWXPayPerformance {
         try {
             Map<String, String> r = wxpay.downloadBill(data);
             System.out.println(r);
+
+            // 将r的数据内容保存成文件
+            String fileContent = r.get("data");
+            saveCSVdataToFile(fileContent);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 将CSV数据保存到磁盘上。
+     *
+     * @param fileContent
+     */
+    public void saveCSVdataToFile(String fileContent) {
+        // JDK自动关闭的流式构造器
+        try (BufferedOutputStream buff = new BufferedOutputStream(new FileOutputStream(new File(
+            "/Users/zhaochensheng/Downloads/20171205bill.csv")))) {
+
+            buff.write(fileContent.getBytes("UTF-8"));
+
+            buff.flush();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 //    public void doReport() {
 //        HashMap<String, String> data = new HashMap<String, String>();
