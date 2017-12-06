@@ -4,15 +4,13 @@
  */
 package com.shinnlove.common.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.criterion.*;
 
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
@@ -34,15 +32,15 @@ public class WebDataDaoImpl implements WebDataDao {
      */
     @Override
     public void saveWebData(WebData webData) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Transaction tx = session.beginTransaction();
-//        try {
-//            session.save(webData);
-//            tx.commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            tx.rollback();
-//        }
+        //        Session session = sessionFactory.getCurrentSession();
+        //        Transaction tx = session.beginTransaction();
+        //        try {
+        //            session.save(webData);
+        //            tx.commit();
+        //        } catch (Exception e) {
+        //            e.printStackTrace();
+        //            tx.rollback();
+        //        }
     }
 
     /**
@@ -140,7 +138,7 @@ public class WebDataDaoImpl implements WebDataDao {
 
             Date endDate = java.sql.Date.valueOf(strEndTime);
 
-            Criterion creterion = Expression.between("pubtime",startDate,endDate);
+            Criterion creterion = Expression.between("pubtime", startDate, endDate);
 
             Criteria criteria = session.createCriteria(WebData.class);
 
@@ -148,15 +146,14 @@ public class WebDataDaoImpl implements WebDataDao {
             criteria.setMaxResults(request.getPageSize());
 
             // 查询结果
-            webDataList = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
-                    .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
-                    .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
-                        //  mysql数据库中该字段为空无法判断
-//                    .add(Restrictions.like("medianame","%%"))
-                    .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
-                    .add(creterion)
-                    .addOrder(Order.desc("pubtime"))
-                    .list();
+            webDataList = criteria
+                .add(Restrictions.eq("spidername", request.getSpiderName()))
+                .add(Restrictions.like("title", "%" + request.getTitle() + "%"))
+                .add(Restrictions.like("author", "%" + request.getPublisher() + "%"))
+                //  mysql数据库中该字段为空无法判断
+                //                    .add(Restrictions.like("medianame","%%"))
+                .add(Restrictions.like("cContent", "%" + request.getContent() + "%"))
+                .add(creterion).addOrder(Order.desc("pubtime")).list();
 
             tx.commit();
         } catch (Exception e) {
@@ -246,11 +243,10 @@ public class WebDataDaoImpl implements WebDataDao {
 
         long result = 0;
 
-
-        Criteria criteria = session.createCriteria(WebData.class);
-        List<WebData> webDataList = criteria.add(Restrictions.like("title", "%关于%")).list();
-
-        System.out.println("查询到" + webDataList);
+        //        Criteria criteria = session.createCriteria(WebData.class);
+        //        List<WebData> webDataList = criteria.add(Restrictions.like("title", "%关于%")).list();
+        //
+        //        System.out.println("查询到" + webDataList);
 
         try {
             String strStartTime = (request.getStartTime() == null) ? "2000-01-01" : request
@@ -267,16 +263,16 @@ public class WebDataDaoImpl implements WebDataDao {
             Criteria criteria = session.createCriteria(WebData.class);
 
             // 查询结果
-            criteria = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
-                    .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
-                    .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
-                    //  mysql数据库中该字段为空无法判断
-//                    .add(Restrictions.like("medianame","%%"))
-                    .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
-                    .add(creterion)
-                    .setProjection(Projections.rowCount());      // 此处添加count函数
+            criteria = criteria
+                .add(Restrictions.eq("spidername", request.getSpiderName()))
+                .add(Restrictions.like("title", "%" + request.getTitle() + "%"))
+                .add(Restrictions.like("author", "%" + request.getPublisher() + "%"))
+                //  mysql数据库中该字段为空无法判断
+                //                    .add(Restrictions.like("medianame","%%"))
+                .add(Restrictions.like("cContent", "%" + request.getContent() + "%"))
+                .add(creterion).setProjection(Projections.rowCount()); // 此处添加count函数
 
-            result = ((Number)criteria.uniqueResult()).intValue();  // 统计计算结果
+            result = ((Number) criteria.uniqueResult()).intValue(); // 统计计算结果
 
             tx.commit();
 
