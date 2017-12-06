@@ -37,10 +37,6 @@ public class WebDataController {
             RequestMethod.POST },produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getWebDataDetail( String paramKey) {
-//        int id = 1;
-//        WebData webData = webDataDao.getWebDataById(1);
-//        JSONObject o = convert(webData);
-//        return o.toJSONString();
 
         JSONObject result;
         try {
