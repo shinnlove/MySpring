@@ -29,6 +29,16 @@ public class WebDataRequest {
 
     private String endTime;
 
+    private String spiderName;
+
+    public String getSpiderName() {
+        return spiderName;
+    }
+
+    public void setSpiderName(String spiderName) {
+        this.spiderName = spiderName;
+    }
+
     /**
      * Getter method for property pageNo.
      *

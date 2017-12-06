@@ -55,6 +55,6 @@ public interface WebDataDao {
      * 
      * @return
      */
-    long queryAllWebDataCount();
+    long queryAllWebDataCount(WebDataRequest request);
 
 }
