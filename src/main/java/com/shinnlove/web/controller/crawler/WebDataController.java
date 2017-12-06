@@ -4,10 +4,8 @@
  */
 package com.shinnlove.web.controller.crawler;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.shinnlove.web.controller.request.WebDataDetailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,14 +31,19 @@ public class WebDataController {
     @Autowired
     private WebDataDao webDataDao;
 
+    /**
+     * 查询WebData详情。
+     *
+     * @param paramKey
+     * @return
+     */
     @RequestMapping(value = "/crawler/webDataDetail.json", method = { RequestMethod.GET,
-            RequestMethod.POST },produces = "application/json; charset=utf-8")
+            RequestMethod.POST }, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getWebDataDetail( String paramKey) {
-
+    public String getWebDataDetail(String paramKey) {
         JSONObject result;
         try {
-            WebDataDetailRequest request = JSON.parseObject(paramKey, WebDataDetailRequest.class);
+            WebData request = JSONObject.parseObject(paramKey, WebData.class);
             WebData webDataDetail = webDataDao.getWebDataById(request.getId());
             JSONObject obj = convert(webDataDetail);
             result = buildResult(0, "ok", obj);
