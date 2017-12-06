@@ -17,10 +17,7 @@ import org.hibernate.Transaction;
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
 import com.shinnlove.web.controller.request.WebDataRequest;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Expression;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 
 /**
  * 网页数据查询DAO实现。
@@ -243,26 +240,9 @@ public class WebDataDaoImpl implements WebDataDao {
      */
     @Override
     public long queryAllWebDataCount(WebDataRequest request) {
-        //        Long count = 0L;
-        //        String hql = "select count(*) from WebData";
-        //
-        //        Session session = sessionFactory.getCurrentSession();
-        //        Transaction tx = session.beginTransaction();
-        //        try {
-        //            Query query = session.createQuery(hql);
-        //
-        //            count = (Long) query.uniqueResult();
-        //            tx.commit();
-        //
-        //        } catch (Exception e) {
-        //            e.printStackTrace();
-        //            tx.rollback();
-        //        }
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
-
-//        List<WebData> webDataList = new ArrayList<WebData>();
 
         long result = 0;
 
@@ -281,14 +261,16 @@ public class WebDataDaoImpl implements WebDataDao {
             Criteria criteria = session.createCriteria(WebData.class);
 
             // 查询结果
-            result = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
+            criteria = criteria.add(Restrictions.eq("spidername", request.getSpiderName()))
                     .add(Restrictions.like("title", "%"+request.getTitle()+"%"))
                     .add(Restrictions.like("author","%"+ request.getPublisher()+"%"))
                     //  mysql数据库中该字段为空无法判断
 //                    .add(Restrictions.like("medianame","%%"))
                     .add(Restrictions.like("cContent","%"+request.getContent()+"%"))
                     .add(creterion)
-                    .list().size();
+                    .setProjection(Projections.rowCount());      // 此处添加count函数
+
+            result = ((Number)criteria.uniqueResult()).intValue();  // 统计计算结果
 
             tx.commit();
         } catch (Exception e) {

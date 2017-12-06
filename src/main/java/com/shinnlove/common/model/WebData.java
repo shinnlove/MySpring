@@ -21,11 +21,11 @@ public class WebData {
 
     private String url;
 
-    private String title;
+    private String title;    //
 
-    private String content;
+    private String content; //
 
-    private Date   pubtime;
+    private Date   pubtime;   //
 
     private Date   collecttime;
 
@@ -35,17 +35,17 @@ public class WebData {
 
     private String channel;
 
-    private String author;
+    private String author;    //
 
-    private String medianame;
+    private String medianame;  //
 
-    private String source;
+    private String source;    //
 
-    private String area;
+    private String area;     //
 
-    private String replys;
+    private String replys;   //
 
-    private String viewcount;
+    private String viewcount; //
 
     private String cContent;
 

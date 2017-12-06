@@ -7,6 +7,7 @@ package com.shinnlove.web.controller.crawler;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shinnlove.web.controller.request.WebDataDetailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,13 +33,25 @@ public class WebDataController {
     @Autowired
     private WebDataDao webDataDao;
 
-    @RequestMapping(value = "/crawler/webData.json", produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/crawler/webDataDetail.json", method = { RequestMethod.GET,
+            RequestMethod.POST },produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getWebData() {
-        int id = 1;
-        WebData webData = webDataDao.getWebDataById(1);
-        JSONObject o = convert(webData);
-        return o.toJSONString();
+    public String getWebDataDetail( String paramKey) {
+//        int id = 1;
+//        WebData webData = webDataDao.getWebDataById(1);
+//        JSONObject o = convert(webData);
+//        return o.toJSONString();
+
+        JSONObject result;
+        try {
+            WebDataDetailRequest request = JSON.parseObject(paramKey, WebDataDetailRequest.class);
+            WebData webDataDetail = webDataDao.getWebDataById(request.getId());
+            JSONObject obj = convert(webDataDetail);
+            result = buildResult(0, "ok", obj);
+        } catch (Exception e) {
+            result = buildResult(-1, "System Error:" + e.getMessage(), null);
+        }
+        return result.toJSONString();
     }
 
     /**
@@ -61,7 +74,6 @@ public class WebDataController {
             // 查询总的数据条数
             Long count = webDataDao.queryAllWebDataCount(request);
 
-            // 这一步查询太卡了，为了看count，就直接new一个空的list
             List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
 
             JSONArray array = new JSONArray();
