@@ -11,12 +11,12 @@
        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
        default-autowire="byName">
 
-    <!-- 在这里配置各种bean -->
+    <!-- apache CXF 发布webservice服务 -->
 
-    <!-- 发布一个dao层服务 -->
-    <bean id="userDao"
-          class="com.shinnlove.common.dao.impl.UserDaoImpl"/>
-    <bean id="webDataDao"
-          class="com.shinnlove.common.dao.impl.WebDataDaoImpl"/>
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.impl.HelloServiceImpl"
+                    address="/HelloWorld"/>
 
 </beans>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
+       default-autowire="byName">
+
+    <!-- 配置数据源和hibernate ORM框架 -->
+
+    <!-- 加载jdbc配置文件 -->
+    <context:property-placeholder location="/WEB-INF/classes/jdbc.properties" file-encoding="utf-8"
+                                  ignore-unresolvable="true"/>
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+          p:driverClass="${jdbc.driverClassName}"
+          p:jdbcUrl="${jdbc.url}"
+          p:user="${jdbc.username}"
+          p:password="${jdbc.password}"
+          p:testConnectionOnCheckout="${jdbc.c3p0.testConnectionOnCheckout}"
+          p:testConnectionOnCheckin="${jdbc.c3p0.testConnectionOnCheckin}"
+          p:idleConnectionTestPeriod="${jdbc.c3p0.idleConnectionTestPeriod}"
+          p:initialPoolSize="${jdbc.c3p0.initialPoolSize}"
+          p:minPoolSize="${jdbc.c3p0.minPoolSize}"
+          p:maxPoolSize="${jdbc.c3p0.maxPoolSize}"
+          p:maxIdleTime="${jdbc.c3p0.maxIdleTime}"/>
+
+    <!-- 以下为接入hibernate -->
+
+    <!-- 配置sessionFactory -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- hibernate基础属性（今后属性多了把下面的基础属性放进cfg中简化spring上下文） -->
+        <!--<property name="configLocation" value="/WEB-INF/classes/hibernate/hibernate.cfg.xml"></property>-->
+        <!-- hibernate基础属性 -->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+                <!-- 本地启动hibernate如果不openSession就要从thread取 -->
+                <prop key="hibernate.current_session_context_class">thread</prop>
+            </props>
+        </property>
+        <!-- 扫描注解配置的entity（xxx实体.hbm.xml文件，实体类映射数据库字段的）-->
+        <!--<property name="packagesToScan" value="com.shinnlove.common.dao"/>-->
+        <!-- 加载实体类的hbm.xml映射文件位置及名称 -->
+        <property name="mappingLocations" value="/WEB-INF/classes/entity/*.hbm.xml"></property>
+    </bean>
+
+    <!-- 使用Spring接入Hibernate事务管理器 -->
+    <bean id="txManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- 配置事务增强处理Bean，指定事务管理器 -->
+    <tx:advice id="transactionAdvice" transaction-manager="txManager">
+        <!-- 配置详细事务处理语义 -->
+        <tx:attributes>
+            <!-- 增删改事务传播级别Required，这也是默认级别 -->
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="load*" propagation="SUPPORTS" read-only="true"/>
+            <!-- 其他采用默认事务方式 -->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- Spring aop事务管理 -->
+    <aop:config>
+        <!-- 配置切入点 -->
+        <aop:pointcut id="transactionPointcut"
+                      expression="execution(* com.shinnlove.core.service.*.*(..))"/>
+        <!-- 指定在txAdvice切入点应用txAdvice事务增强处理 -->
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
+    </aop:config>
+
+</beans>

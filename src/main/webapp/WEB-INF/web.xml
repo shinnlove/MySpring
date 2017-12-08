@@ -31,7 +31,12 @@
     <!-- 把 spring 上下文 applicationContext.xml加入到配置文件中 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
+        <param-value>
+            /WEB-INF/applicationContext.xml,
+            /WEB-INF/spring-database.xml,
+            /WEB-INF/spring-quartz.xml,
+            /WEB-INF/spring-webService.xml
+        </param-value>
     </context-param>
     <!-- web拦截器使用spring自己的拦截器 -->
     <listener>

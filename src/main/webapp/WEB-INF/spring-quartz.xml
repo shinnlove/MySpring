@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
+       default-autowire="byName">
+
+    <!-- 配置spring定时调度任务 -->
+
+    <!-- 配置定时任务调度，注意xml配置不要使用autowire，容易引起数据源注入问题 -->
+    <bean id="quartzScheduler"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
+        <property name="triggers">
+            <list>
+                <ref bean="myBizTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 定时策略：采用cronTrigger策略，这里每5秒执行一次任务 -->
+    <bean id="myBizTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="myBizJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>0/30 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 配置quartz调度的bean和执行的方法、是否并发执行 -->
+    <bean id="myBizJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="myIntervalJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>queryWeChatPayBill</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+
+    <!-- 业务定时任务类，定义了定时执行的具体动作 -->
+    <bean id="myIntervalJob"
+          class="com.shinnlove.biz.service.interval.job.MyIntervalJob"/>
+
+</beans>
