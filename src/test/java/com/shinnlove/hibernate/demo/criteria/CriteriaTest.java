@@ -11,9 +11,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.common.model.enterprise.Enterprise;
 
 /**
  * Hibernate的Criteria例子。
@@ -21,6 +26,8 @@ import com.shinnlove.common.model.WebData;
  * @author shinnlove.jinsheng
  * @version $Id: CriteriaTest.java, v 0.1 2017-12-06 下午10:42 shinnlove.jinsheng Exp $$
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:/META-INF/spring/spring-database.xml")
 public class CriteriaTest {
 
     /** hibernate session工厂 */
@@ -34,20 +41,58 @@ public class CriteriaTest {
         criteriaTest.queryWithFecth();
     }
 
-    private void query() {
-        // 打开Session和事务
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        // 使用createCriteria开始条件查询
-        List list = session.createCriteria(WebData.class)
-        // 根据Student的属性进行过滤数据
-            .add(Restrictions.gt("name", "a")).list();
-        System.out.println("=====简单条件查询获取所有学生记录=====");
-        for (Object obj : list) {
-            WebData s = (WebData) obj;
-            System.out.println(s.getAuthor());
+    @Test
+    public void 测试使用Criteria的Restrictions规则匹配字段_gt() {
+        Transaction tx = null;
+        try {
+            // 打开Session和事务
+            Session session = sessionFactory.getCurrentSession();
+            tx = session.beginTransaction();
+
+            // 使用createCriteria开始条件查询
+            List list = session.createCriteria(Enterprise.class)
+            // 根据account的属性进行过滤数据，注意这里是gt不是eq
+                .add(Restrictions.gt("account", "admin")).list();
+            System.out.println("=====简单条件查询获取企业信息=====");
+            for (Object obj : list) {
+                Enterprise e = (Enterprise) obj;
+                System.out.println(e);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (tx != null) {
+                tx = null;
+            }
         }
-        tx.commit();
+    }
+
+    @Test
+    public void 测试使用Criteria的Restrictions规则匹配字段_eq() {
+        Transaction tx = null;
+        try {
+            // 打开Session和事务
+            Session session = sessionFactory.getCurrentSession();
+            tx = session.beginTransaction();
+
+            // 使用createCriteria开始条件查询
+            List list = session.createCriteria(Enterprise.class)
+            // 根据account的属性进行过滤数据，注意这里是gt不是eq
+                .add(Restrictions.eq("account", "admin")).list();
+            System.out.println("=====简单条件查询获取企业信息=====");
+            for (Object obj : list) {
+                Enterprise e = (Enterprise) obj;
+                System.out.println(e);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (tx != null) {
+                tx = null;
+            }
+        }
     }
 
     // 示范根据关联实体的属性过滤数据
