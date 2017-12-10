@@ -4,6 +4,7 @@
  */
 package com.shinnlove.common.dao.impl;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import com.shinnlove.common.model.User;
  * @version $Id: UserDaoImplTest.java, v 0.1 2017-11-25 下午10:50 shinnlove.jinsheng Exp $$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations= "classpath:applicationContext.xml")
+@ContextConfiguration(locations= "classpath:/META-INF/spring/*.xml")
 public class UserDaoImplTest {
 
     @Autowired
@@ -28,8 +29,8 @@ public class UserDaoImplTest {
 
     @Test
     public void getUserById() {
-        User user = userDao.getUserById(1);
-        System.out.println(user);
+        User user = userDao.getUserById(8);
+        Assert.assertEquals("evelyn", user.getName());
     }
 
 }

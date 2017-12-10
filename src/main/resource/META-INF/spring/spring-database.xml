@@ -14,7 +14,7 @@
     <!-- 配置数据源和hibernate ORM框架 -->
 
     <!-- 加载jdbc配置文件 -->
-    <context:property-placeholder location="/WEB-INF/classes/jdbc.properties" file-encoding="utf-8"
+    <context:property-placeholder location="classpath:META-INF/database/jdbc.properties" file-encoding="utf-8"
                                   ignore-unresolvable="true"/>
     <!-- 配置数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
@@ -55,23 +55,23 @@
         <!-- 加载实体类的hbm.xml映射文件位置及名称 -->
         <property name="mappingLocations">
             <list>
-                <value>/WEB-INF/classes/entity/*.hbm.xml</value>
-                <value>classpath:com/shinnlove/common/model/TCustomerguide.hbm.xml</value>
-                <value>classpath:com/shinnlove/common/model/TCustomerinfo.hbm.xml</value>
-                <value>classpath:com/shinnlove/common/model/TEnterprise.hbm.xml</value>
-                <value>classpath:com/shinnlove/common/model/TEnterpriseinfo.hbm.xml</value>
-                <value>classpath:com/shinnlove/common/model/TShopguide.hbm.xml</value>
-                <value>classpath:com/shinnlove/common/model/TSubbranch.hbm.xml</value>
+                <value>classpath:META-INF/hibernate/entity/*.hbm.xml</value>
+                <!--<value>classpath:com/shinnlove/common/model/TCustomerguide.hbm.xml</value>-->
+                <!--<value>classpath:com/shinnlove/common/model/TCustomerinfo.hbm.xml</value>-->
+                <!--<value>classpath:com/shinnlove/common/model/TEnterprise.hbm.xml</value>-->
+                <!--<value>classpath:com/shinnlove/common/model/TEnterpriseinfo.hbm.xml</value>-->
+                <!--<value>classpath:com/shinnlove/common/model/TShopguide.hbm.xml</value>-->
+                <!--<value>classpath:com/shinnlove/common/model/TSubbranch.hbm.xml</value>-->
             </list>
         </property>
         <property name="annotatedClasses">
             <list>
-                <value>com.shinnlove.common.model.TCustomerguide</value>
-                <value>com.shinnlove.common.model.TCustomerinfo</value>
-                <value>com.shinnlove.common.model.TEnterprise</value>
-                <value>com.shinnlove.common.model.TEnterpriseinfo</value>
-                <value>com.shinnlove.common.model.TShopguide</value>
-                <value>com.shinnlove.common.model.TSubbranch</value>
+                <!--<value>com.shinnlove.common.model.TCustomerguide</value>-->
+                <!--<value>com.shinnlove.common.model.TCustomerinfo</value>-->
+                <!--<value>com.shinnlove.common.model.TEnterprise</value>-->
+                <!--<value>com.shinnlove.common.model.TEnterpriseinfo</value>-->
+                <!--<value>com.shinnlove.common.model.TShopguide</value>-->
+                <!--<value>com.shinnlove.common.model.TSubbranch</value>-->
             </list>
         </property>
     </bean>
