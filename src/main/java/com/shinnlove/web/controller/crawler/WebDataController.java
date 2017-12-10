@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.common.util.system.exception.SystemException;
 import com.shinnlove.web.controller.request.WebDataRequest;
 
 /**
@@ -68,6 +69,16 @@ public class WebDataController {
     public String getWebDataByPage(String paramKey) {
 
         logger.warn("进入了getWebDataByPage方法，查询参数paramKey=" + paramKey);
+
+        try {
+            int a = 10;
+            int b = 0;
+            int c = a / b;
+            String str = String.valueOf(c);
+        } catch (Exception e) {
+            SystemException exception = new SystemException("出现错误", e);
+            logger.error("捕捉到发生错误：", exception);
+        }
 
         JSONObject result;
         try {
