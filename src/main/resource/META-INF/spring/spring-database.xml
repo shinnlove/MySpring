@@ -53,7 +53,27 @@
         <!-- 扫描注解配置的entity（xxx实体.hbm.xml文件，实体类映射数据库字段的）-->
         <!--<property name="packagesToScan" value="com.shinnlove.common.dao"/>-->
         <!-- 加载实体类的hbm.xml映射文件位置及名称 -->
-        <property name="mappingLocations" value="/WEB-INF/classes/entity/*.hbm.xml"></property>
+        <property name="mappingLocations">
+            <list>
+                <value>/WEB-INF/classes/entity/*.hbm.xml</value>
+                <value>classpath:com/shinnlove/common/model/TCustomerguide.hbm.xml</value>
+                <value>classpath:com/shinnlove/common/model/TCustomerinfo.hbm.xml</value>
+                <value>classpath:com/shinnlove/common/model/TEnterprise.hbm.xml</value>
+                <value>classpath:com/shinnlove/common/model/TEnterpriseinfo.hbm.xml</value>
+                <value>classpath:com/shinnlove/common/model/TShopguide.hbm.xml</value>
+                <value>classpath:com/shinnlove/common/model/TSubbranch.hbm.xml</value>
+            </list>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.shinnlove.common.model.TCustomerguide</value>
+                <value>com.shinnlove.common.model.TCustomerinfo</value>
+                <value>com.shinnlove.common.model.TEnterprise</value>
+                <value>com.shinnlove.common.model.TEnterpriseinfo</value>
+                <value>com.shinnlove.common.model.TShopguide</value>
+                <value>com.shinnlove.common.model.TSubbranch</value>
+            </list>
+        </property>
     </bean>
 
     <!-- 使用Spring接入Hibernate事务管理器 -->

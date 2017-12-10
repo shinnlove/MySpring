@@ -55,7 +55,7 @@ public class WebData {
     private String cContent;
 
     /**
-     * 默认浏览器。
+     * 默认构造器。
      */
     public WebData() {
     }

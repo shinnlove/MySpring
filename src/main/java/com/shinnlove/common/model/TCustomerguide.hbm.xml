@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.shinnlove.common.model.TCustomerguide" table="t_customerguide" schema="weact">
+        <id name="cusGuideId">
+            <column name="cus_guide_id" sql-type="varchar(32)" length="32"/>
+        </id>
+        <property name="customerId">
+            <column name="customer_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="eId">
+            <column name="e_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="subbranchId">
+            <column name="subbranch_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="guideId">
+            <column name="guide_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="chooseTime">
+            <column name="choose_time" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="guideRemarkname">
+            <column name="guide_remarkname" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="isDel">
+            <column name="is_del" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

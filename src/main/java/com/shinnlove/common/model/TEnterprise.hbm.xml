@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.shinnlove.common.model.TEnterprise" table="t_enterprise" schema="weact">
+        <id name="eId">
+            <column name="e_id" sql-type="varchar(32)" length="32"/>
+        </id>
+        <property name="account">
+            <column name="account" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="serviceVersion">
+            <column name="service_version" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="contactNumber">
+            <column name="contact_number" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="serviceStartTime">
+            <column name="service_start_time" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="serviceEndTime">
+            <column name="service_end_time" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="dimensionCode">
+            <column name="dimension_code" sql-type="longblob" not-null="true"/>
+        </property>
+        <property name="addTime">
+            <column name="add_time" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar(300)" length="300" not-null="true"/>
+        </property>
+        <property name="isDel">
+            <column name="is_del" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.shinnlove.common.model.TSubbranch" table="t_subbranch" schema="weact">
+        <id name="subbranchId">
+            <column name="subbranch_id" sql-type="varchar(32)" length="32"/>
+        </id>
+        <property name="eId">
+            <column name="e_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="subbranchName">
+            <column name="subbranch_name" sql-type="varchar(500)" length="500" not-null="true"/>
+        </property>
+        <property name="subbranchBrand">
+            <column name="subbranch_brand" sql-type="varchar(100)" length="100" not-null="true"/>
+        </property>
+        <property name="subbranchCode">
+            <column name="subbranch_code" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="addTime">
+            <column name="add_time" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="latestModify">
+            <column name="latest_modify" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="province">
+            <column name="province" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="city">
+            <column name="city" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="county">
+            <column name="county" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="subbranchAddress">
+            <column name="subbranch_address" sql-type="varchar(500)" length="500" not-null="true"/>
+        </property>
+        <property name="longitude">
+            <column name="longitude" sql-type="decimal(18,12)" precision="18" scale="12" not-null="true"/>
+        </property>
+        <property name="latitude">
+            <column name="latitude" sql-type="decimal(18,12)" precision="18" scale="12" not-null="true"/>
+        </property>
+        <property name="subbranchDescription">
+            <column name="subbranch_description" sql-type="text" not-null="true"/>
+        </property>
+        <property name="subbranchType">
+            <column name="subbranch_type" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="manager">
+            <column name="manager" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="contactNumber">
+            <column name="contact_number" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="imagePath">
+            <column name="image_path" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="signsPath">
+            <column name="signs_path" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="businessLicense">
+            <column name="business_license" sql-type="varchar(18)" length="18" not-null="true"/>
+        </property>
+        <property name="closedStatus">
+            <column name="closed_status" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="examineStatus">
+            <column name="examine_status" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar(300)" length="300" not-null="true"/>
+        </property>
+        <property name="isDel">
+            <column name="is_del" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

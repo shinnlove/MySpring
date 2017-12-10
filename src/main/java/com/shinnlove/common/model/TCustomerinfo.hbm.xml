@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.shinnlove.common.model.TCustomerinfo" table="t_customerinfo" schema="weact">
+        <id name="customerId">
+            <column name="customer_id" sql-type="varchar(32)" length="32"/>
+        </id>
+        <property name="openid">
+            <column name="openid" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="customerName">
+            <column name="customer_name" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="nickName">
+            <column name="nick_name" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="account">
+            <column name="account" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="eId">
+            <column name="e_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="contactNumber">
+            <column name="contact_number" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="email">
+            <column name="email" sql-type="varchar(100)" length="100" not-null="true"/>
+        </property>
+        <property name="sex">
+            <column name="sex" sql-type="char(2)" length="2" not-null="true"/>
+        </property>
+        <property name="birthday">
+            <column name="birthday" sql-type="date" not-null="true"/>
+        </property>
+        <property name="customerAddress">
+            <column name="customer_address" sql-type="varchar(200)" length="200" not-null="true"/>
+        </property>
+        <property name="registerTime">
+            <column name="register_time" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="originalMembercard">
+            <column name="original_membercard" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="memberLevel">
+            <column name="member_level" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="historyTotalScore">
+            <column name="history_total_score" sql-type="int(11) unsigned"/>
+        </property>
+        <property name="totalScore">
+            <column name="total_score" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="inviter">
+            <column name="inviter" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="subordinateShop">
+            <column name="subordinate_shop" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="internalStaff">
+            <column name="internal_staff" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="internalId">
+            <column name="internal_id" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="userType">
+            <column name="user_type" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar(300)" length="300" not-null="true"/>
+        </property>
+        <property name="isDel">
+            <column name="is_del" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

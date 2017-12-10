@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.shinnlove.common.model.TShopguide" table="t_shopguide" schema="weact">
+        <id name="guideId">
+            <column name="guide_id" sql-type="varchar(32)" length="32"/>
+        </id>
+        <property name="eId">
+            <column name="e_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="subbranchId">
+            <column name="subbranch_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="guideNumber">
+            <column name="guide_number" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="account">
+            <column name="account" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="guideName">
+            <column name="guide_name" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="nickname">
+            <column name="nickname" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="sex">
+            <column name="sex" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="idCard">
+            <column name="id_card" sql-type="varchar(18)" length="18" not-null="true"/>
+        </property>
+        <property name="birthday">
+            <column name="birthday" sql-type="date" not-null="true"/>
+        </property>
+        <property name="cellphone">
+            <column name="cellphone" sql-type="varchar(18)" length="18" not-null="true"/>
+        </property>
+        <property name="signature">
+            <column name="signature" sql-type="varchar(100)" length="100" not-null="true"/>
+        </property>
+        <property name="dimensionCode">
+            <column name="dimension_code" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="headimg">
+            <column name="headimg" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="guideLevel">
+            <column name="guide_level" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="guideType">
+            <column name="guide_type" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="busyStatus">
+            <column name="busy_status" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="starLevel">
+            <column name="star_level" sql-type="decimal(9,2)" precision="9" scale="2" not-null="true"/>
+        </property>
+        <property name="commentCount">
+            <column name="comment_count" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="expectSales">
+            <column name="expect_sales" sql-type="decimal(9,2)" precision="9" scale="2"/>
+        </property>
+        <property name="addTime">
+            <column name="add_time" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="latestModify">
+            <column name="latest_modify" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="isDel">
+            <column name="is_del" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

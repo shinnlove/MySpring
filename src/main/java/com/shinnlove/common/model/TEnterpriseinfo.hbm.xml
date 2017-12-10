@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.shinnlove.common.model.TEnterpriseinfo" table="t_enterpriseinfo" schema="weact">
+        <id name="eInfoId">
+            <column name="e_info_id" sql-type="varchar(32)" length="32"/>
+        </id>
+        <property name="eId">
+            <column name="e_id" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="brand">
+            <column name="brand" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="eName">
+            <column name="e_name" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="eIndexLogo">
+            <column name="e_index_logo" sql-type="varchar(200)" length="200" not-null="true"/>
+        </property>
+        <property name="eSquareLogo">
+            <column name="e_square_logo" sql-type="varchar(200)" length="200" not-null="true"/>
+        </property>
+        <property name="eRectLogo">
+            <column name="e_rect_logo" sql-type="varchar(200)" length="200" not-null="true"/>
+        </property>
+        <property name="qrCode">
+            <column name="qr_code" sql-type="varchar(200)" length="200" not-null="true"/>
+        </property>
+        <property name="eContactPerson">
+            <column name="e_contact_person" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="eProvince">
+            <column name="e_province" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="eCity">
+            <column name="e_city" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="eCounty">
+            <column name="e_county" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <property name="eAddress">
+            <column name="e_address" sql-type="varchar(500)" length="500" not-null="true"/>
+        </property>
+        <property name="eLongitude">
+            <column name="e_longitude" sql-type="decimal(18,12)" precision="18" scale="12" not-null="true"/>
+        </property>
+        <property name="eLatitude">
+            <column name="e_latitude" sql-type="decimal(18,12)" precision="18" scale="12" not-null="true"/>
+        </property>
+        <property name="wechatAccount">
+            <column name="wechat_account" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="wechatName">
+            <column name="wechat_name" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="industry">
+            <column name="industry" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="siteName">
+            <column name="site_name" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="focusUrl">
+            <column name="focus_url" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="originalId">
+            <column name="original_id" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="isAuth">
+            <column name="is_auth" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="developerToken">
+            <column name="developer_token" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="appid">
+            <column name="appid" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="appsecret">
+            <column name="appsecret" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="msgEncode">
+            <column name="msg_encode" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="aeskey">
+            <column name="aeskey" sql-type="varchar(43)" length="43" not-null="true"/>
+        </property>
+        <property name="paysignkey">
+            <column name="paysignkey" sql-type="varchar(255)" not-null="true"/>
+        </property>
+        <property name="partnerid">
+            <column name="partnerid" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="partnerkey">
+            <column name="partnerkey" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="tenpayOpen">
+            <column name="tenpay_open" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="authorizeOpen">
+            <column name="authorize_open" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="loginStyle">
+            <column name="login_style" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="allSubbranch">
+            <column name="all_subbranch" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="allowDistribute">
+            <column name="allow_distribute" sql-type="int(11)"/>
+        </property>
+        <property name="p2PInitialFee">
+            <column name="p2p_initial_fee" sql-type="decimal(9,2)" precision="9" scale="2"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar(300)" length="300" not-null="true"/>
+        </property>
+        <property name="isDel">
+            <column name="is_del" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
