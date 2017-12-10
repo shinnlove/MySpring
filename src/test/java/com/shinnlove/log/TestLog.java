@@ -5,10 +5,12 @@
 package com.shinnlove.log;
 
 import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Log4jConfigurer;
 
 /**
  * @author shinnlove.jinsheng
@@ -21,9 +23,20 @@ public class TestLog {
     /** 日志 */
     private static Logger logger = Logger.getLogger(TestLog.class);
 
+    @Before
+    public void init() {
+        try {
+            Log4jConfigurer.initLogging("classpath:META-INF/log/log4j.xml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void 测试日志输出() {
-        logger.warn("你好");
+        //        logger.info("hello，你好");
+        logger.warn("警告");
+        logger.error("错误");
     }
 
 }
