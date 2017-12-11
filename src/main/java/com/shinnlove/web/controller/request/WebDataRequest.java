@@ -31,14 +31,6 @@ public class WebDataRequest {
 
     private String spiderName;
 
-    public String getSpiderName() {
-        return spiderName.trim();
-    }
-
-    public void setSpiderName(String spiderName) {
-        this.spiderName = spiderName;
-    }
-
     /**
      * Getter method for property pageNo.
      *
@@ -81,7 +73,7 @@ public class WebDataRequest {
      * @return property value of title
      */
     public String getTitle() {
-        return title.trim();
+        return title;
     }
 
     /**
@@ -99,7 +91,7 @@ public class WebDataRequest {
      * @return property value of publisher
      */
     public String getPublisher() {
-        return publisher.trim();
+        return publisher;
     }
 
     /**
@@ -117,7 +109,7 @@ public class WebDataRequest {
      * @return property value of publishInst
      */
     public String getPublishInst() {
-        return publishInst.trim();
+        return publishInst;
     }
 
     /**
@@ -135,7 +127,7 @@ public class WebDataRequest {
      * @return property value of content
      */
     public String getContent() {
-        return content.trim();
+        return content;
     }
 
     /**
@@ -181,6 +173,24 @@ public class WebDataRequest {
      */
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    /**
+     * Getter method for property spiderName.
+     *
+     * @return property value of spiderName
+     */
+    public String getSpiderName() {
+        return spiderName;
+    }
+
+    /**
+     * Setter method for property spiderName.
+     *
+     * @param spiderName value to be assigned to property spiderName
+     */
+    public void setSpiderName(String spiderName) {
+        this.spiderName = spiderName;
     }
 
     /**
