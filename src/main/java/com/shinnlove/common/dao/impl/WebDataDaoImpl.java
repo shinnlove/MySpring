@@ -249,10 +249,10 @@ public class WebDataDaoImpl implements WebDataDao {
         //        System.out.println("查询到" + webDataList);
 
         try {
-            String strStartTime = (request.getStartTime() == null) ? "2000-01-01" : request
-                .getStartTime().substring(0, 10);
-            String strEndTime = (request.getEndTime() == null) ? new SimpleDateFormat("yyyy-MM-dd")
-                .format(new Date()) : request.getEndTime().substring(0, 10);
+            String strStartTime = (request.getStartTime() == null || request.getStartTime() == "") ? "2000-01-01"
+                : request.getStartTime().substring(0, 10);
+            String strEndTime = (request.getEndTime() == null || request.getStartTime() == "") ? new SimpleDateFormat(
+                "yyyy-MM-dd").format(new Date()) : request.getEndTime().substring(0, 10);
 
             Date startDate = java.sql.Date.valueOf(strStartTime);
 
