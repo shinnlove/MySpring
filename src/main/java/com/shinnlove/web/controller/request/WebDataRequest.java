@@ -13,9 +13,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class WebDataRequest {
 
-    private int    pageNo;
+    private int pageNo;
 
-    private int    pageSize;
+    private int pageSize;
 
     private String title;
 
@@ -32,7 +32,7 @@ public class WebDataRequest {
     private String spiderName;
 
     public String getSpiderName() {
-        return spiderName;
+        return spiderName.trim();
     }
 
     public void setSpiderName(String spiderName) {
@@ -81,7 +81,7 @@ public class WebDataRequest {
      * @return property value of title
      */
     public String getTitle() {
-        return title;
+        return title.trim();
     }
 
     /**
@@ -99,7 +99,7 @@ public class WebDataRequest {
      * @return property value of publisher
      */
     public String getPublisher() {
-        return publisher;
+        return publisher.trim();
     }
 
     /**
@@ -117,7 +117,7 @@ public class WebDataRequest {
      * @return property value of publishInst
      */
     public String getPublishInst() {
-        return publishInst;
+        return publishInst.trim();
     }
 
     /**
@@ -135,7 +135,7 @@ public class WebDataRequest {
      * @return property value of content
      */
     public String getContent() {
-        return content;
+        return content.trim();
     }
 
     /**
