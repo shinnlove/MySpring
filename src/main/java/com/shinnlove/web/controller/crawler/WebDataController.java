@@ -6,6 +6,7 @@ package com.shinnlove.web.controller.crawler;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.common.util.system.exception.SystemException;
 import com.shinnlove.web.controller.request.WebDataRequest;
 
 /**
@@ -27,6 +29,9 @@ import com.shinnlove.web.controller.request.WebDataRequest;
  */
 @Controller
 public class WebDataController {
+
+    /** 日志 */
+    private static Logger logger = Logger.getLogger(WebDataController.class);
 
     @Autowired
     private WebDataDao webDataDao;
@@ -62,6 +67,19 @@ public class WebDataController {
             RequestMethod.POST }, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getWebDataByPage(String paramKey) {
+
+        logger.warn("进入了getWebDataByPage方法，查询参数paramKey=" + paramKey);
+
+        try {
+            int a = 10;
+            int b = 0;
+            int c = a / b;
+            String str = String.valueOf(c);
+        } catch (Exception e) {
+            SystemException exception = new SystemException("出现错误", e);
+            logger.error("捕捉到发生错误：", exception);
+        }
+
         JSONObject result;
         try {
             WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
