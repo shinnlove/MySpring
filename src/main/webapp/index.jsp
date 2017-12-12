@@ -13,12 +13,5 @@
     <div id="root"></div>
     <script src="./js/common.js"></script>
     <script src="./js/index.js"></script>
-    <script>
-        window.onload = function () {
-            setTimeout(function () {
-                window.location.href = "/MySpring/#/webdata/list";
-            }, 500);
-        }
-    </script>
 </body>
 </html>

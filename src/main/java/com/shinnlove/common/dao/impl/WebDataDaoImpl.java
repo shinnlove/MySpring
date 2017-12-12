@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 
@@ -23,6 +24,9 @@ import com.shinnlove.web.controller.request.WebDataRequest;
  * @version $Id: WebDataDaoImpl.java, v 0.1 2017-12-02 下午12:53 shinnlove.jinsheng Exp $$
  */
 public class WebDataDaoImpl implements WebDataDao {
+
+    /** 配置静态日志 */
+    private static Logger logger = Logger.getLogger(WebDataDaoImpl.class);
 
     /** hibernate session工厂 */
     private SessionFactory sessionFactory;
@@ -59,12 +63,16 @@ public class WebDataDaoImpl implements WebDataDao {
             Query query = session.createQuery(hql);
             query.setParameter(0, id);
             List list = query.list();
+
+            logger.info("查询到的信息是" + list);
+
             tx.commit();
             if (list.size() > 0) {
                 webData = (WebData) list.get(0);
             }
         } catch (Exception ex) {
             ex.printStackTrace(); // 打印异常堆栈
+            logger.error("getWebDataById出现错误，错误的堆栈是：", ex);
         } finally {
             if (tx != null) {
                 tx = null;
@@ -102,6 +110,9 @@ public class WebDataDaoImpl implements WebDataDao {
             query.setMaxResults(pageSize);
 
             List list = query.list();
+
+            logger.info("查询到的信息是" + list);
+
             tx.commit();
 
             // 转换
@@ -110,7 +121,7 @@ public class WebDataDaoImpl implements WebDataDao {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("queryWebDataByPage出现错误，错误的堆栈是：", e);
             tx.rollback();
         }
 
@@ -193,9 +204,11 @@ public class WebDataDaoImpl implements WebDataDao {
                 .add(Restrictions.like("cContent", "%" + content + "%"))
                 .add(creterion).addOrder(Order.desc("pubtime")).list();
 
+            logger.warn("查询到的信息是" + webDataList);
+
             tx.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("queryAllWebDataByPage出现错误，错误的堆栈是：", e);
             tx.rollback();
         }
         return webDataList;
