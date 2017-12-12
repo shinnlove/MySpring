@@ -204,7 +204,10 @@ public class WebDataDaoImpl implements WebDataDao {
                 .add(Restrictions.like("cContent", "%" + content + "%"))
                 .add(creterion).addOrder(Order.desc("pubtime")).list();
 
-            logger.warn("查询到的信息是" + webDataList);
+            logger.warn("查询到的信息是hhhhhhhhhhhhhhhhhhhh");
+            logger.warn("查询到的信息是webDataList=" + webDataList);
+
+
 
             tx.commit();
         } catch (Exception e) {
