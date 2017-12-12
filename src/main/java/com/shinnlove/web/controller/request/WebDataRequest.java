@@ -13,9 +13,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class WebDataRequest {
 
-    private int    pageNo;
+    private int pageNo;
 
-    private int    pageSize;
+    private int pageSize;
 
     private String title;
 
@@ -30,14 +30,6 @@ public class WebDataRequest {
     private String endTime;
 
     private String spiderName;
-
-    public String getSpiderName() {
-        return spiderName;
-    }
-
-    public void setSpiderName(String spiderName) {
-        this.spiderName = spiderName;
-    }
 
     /**
      * Getter method for property pageNo.
@@ -181,6 +173,24 @@ public class WebDataRequest {
      */
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    /**
+     * Getter method for property spiderName.
+     *
+     * @return property value of spiderName
+     */
+    public String getSpiderName() {
+        return spiderName;
+    }
+
+    /**
+     * Setter method for property spiderName.
+     *
+     * @param spiderName value to be assigned to property spiderName
+     */
+    public void setSpiderName(String spiderName) {
+        this.spiderName = spiderName;
     }
 
     /**

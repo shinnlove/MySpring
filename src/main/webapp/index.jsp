@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Hello World</title>
+    <title>中国移动交流网站</title>
     <link rel="stylesheet" type="text/css" href="./css/index.css">
 </head>
 
@@ -13,5 +13,12 @@
     <div id="root"></div>
     <script src="./js/common.js"></script>
     <script src="./js/index.js"></script>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                window.location.href = "/MySpring/#/webdata/list";
+            }, 500);
+        }
+    </script>
 </body>
 </html>

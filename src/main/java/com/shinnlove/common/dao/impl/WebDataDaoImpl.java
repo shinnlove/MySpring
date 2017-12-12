@@ -129,14 +129,52 @@ public class WebDataDaoImpl implements WebDataDao {
         List<WebData> webDataList = new ArrayList<WebData>();
 
         try {
-            String strStartTime = (request.getStartTime() == null) ? "2000-01-01" : request
-                .getStartTime().substring(0, 10);
-            String strEndTime = (request.getEndTime() == null) ? new SimpleDateFormat("yyyy-MM-dd")
-                .format(new Date()) : request.getEndTime().substring(0, 10);
+            String startTime = request.getStartTime();
+            String endTime = request.getEndTime();
 
-            Date startDate = java.sql.Date.valueOf(strStartTime);
+            if (startTime != null && startTime.length() >= 10) {
+                startTime = startTime.substring(0, 10);
+            } else {
+                startTime = "2000-01-01";
+            }
 
-            Date endDate = java.sql.Date.valueOf(strEndTime);
+            if (endTime != null && endTime.length() >= 10) {
+                endTime = endTime.substring(0, 10);
+            } else {
+                endTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            }
+
+            String spiderName = request.getSpiderName();
+            if (spiderName == null) {
+                spiderName = "";
+            } else {
+                spiderName.trim();
+            }
+
+            String title = request.getTitle();
+            if (title == null) {
+                title = "";
+            } else {
+                title.trim();
+            }
+
+            String publisher = request.getPublisher();
+            if (publisher == null) {
+                publisher = "";
+            } else {
+                publisher.trim();
+            }
+
+            String content = request.getContent();
+            if (content == null) {
+                content = "";
+            } else {
+                content.trim();
+            }
+
+            Date startDate = java.sql.Date.valueOf(startTime);
+
+            Date endDate = java.sql.Date.valueOf(endTime);
 
             Criterion creterion = Expression.between("pubtime", startDate, endDate);
 
@@ -147,12 +185,12 @@ public class WebDataDaoImpl implements WebDataDao {
 
             // 查询结果
             webDataList = criteria
-                .add(Restrictions.eq("spidername", request.getSpiderName()))
-                .add(Restrictions.like("title", "%" + request.getTitle() + "%"))
-                .add(Restrictions.like("author", "%" + request.getPublisher() + "%"))
+                .add(Restrictions.eq("spidername", spiderName))
+                .add(Restrictions.like("title", "%" + title + "%"))
+                .add(Restrictions.like("author", "%" + publisher + "%"))
                 //  mysql数据库中该字段为空无法判断
                 //                    .add(Restrictions.like("medianame","%%"))
-                .add(Restrictions.like("cContent", "%" + request.getContent() + "%"))
+                .add(Restrictions.like("cContent", "%" + content + "%"))
                 .add(creterion).addOrder(Order.desc("pubtime")).list();
 
             tx.commit();
@@ -249,14 +287,52 @@ public class WebDataDaoImpl implements WebDataDao {
         //        System.out.println("查询到" + webDataList);
 
         try {
-            String strStartTime = (request.getStartTime() == null) ? "2000-01-01" : request
-                .getStartTime().substring(0, 10);
-            String strEndTime = (request.getEndTime() == null) ? new SimpleDateFormat("yyyy-MM-dd")
-                .format(new Date()) : request.getEndTime().substring(0, 10);
+            String startTime = request.getStartTime();
+            String endTime = request.getEndTime();
 
-            Date startDate = java.sql.Date.valueOf(strStartTime);
+            if (startTime != null && startTime.length() >= 10) {
+                startTime = startTime.substring(0, 10);
+            } else {
+                startTime = "2000-01-01";
+            }
 
-            Date endDate = java.sql.Date.valueOf(strEndTime);
+            if (endTime != null && endTime.length() >= 10) {
+                endTime = endTime.substring(0, 10);
+            } else {
+                endTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            }
+
+            String spiderName = request.getSpiderName();
+            if (spiderName == null) {
+                spiderName = "";
+            } else {
+                spiderName.trim();
+            }
+
+            String title = request.getTitle();
+            if (title == null) {
+                title = "";
+            } else {
+                title.trim();
+            }
+
+            String publisher = request.getPublisher();
+            if (publisher == null) {
+                publisher = "";
+            } else {
+                publisher.trim();
+            }
+
+            String content = request.getContent();
+            if (content == null) {
+                content = "";
+            } else {
+                content.trim();
+            }
+
+            Date startDate = java.sql.Date.valueOf(startTime);
+
+            Date endDate = java.sql.Date.valueOf(endTime);
 
             Criterion creterion = Expression.between("pubtime", startDate, endDate);
 
@@ -264,12 +340,12 @@ public class WebDataDaoImpl implements WebDataDao {
 
             // 查询结果
             criteria = criteria
-                .add(Restrictions.eq("spidername", request.getSpiderName()))
-                .add(Restrictions.like("title", "%" + request.getTitle() + "%"))
-                .add(Restrictions.like("author", "%" + request.getPublisher() + "%"))
+                .add(Restrictions.eq("spidername", spiderName))
+                .add(Restrictions.like("title", "%" + title + "%"))
+                .add(Restrictions.like("author", "%" + publisher + "%"))
                 //  mysql数据库中该字段为空无法判断
                 //                    .add(Restrictions.like("medianame","%%"))
-                .add(Restrictions.like("cContent", "%" + request.getContent() + "%"))
+                .add(Restrictions.like("cContent", "%" + content + "%"))
                 .add(creterion).setProjection(Projections.rowCount()); // 此处添加count函数
 
             result = ((Number) criteria.uniqueResult()).intValue(); // 统计计算结果
