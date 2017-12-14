@@ -204,11 +204,7 @@ public class WebDataDaoImpl implements WebDataDao {
                 .add(Restrictions.like("cContent", "%" + content + "%"))
                 .add(creterion).addOrder(Order.desc("pubtime")).list();
 
-            logger.warn("查询到的信息是hhhhhhhhhhhhhhhhhhhh");
-            logger.warn("查询到的信息是webDataList=" + webDataList);
-
-
-
+            logger.warn("查询到的信息webDataList的size是" + webDataList.size());
             tx.commit();
         } catch (Exception e) {
             logger.error("queryAllWebDataByPage出现错误，错误的堆栈是：", e);
@@ -366,9 +362,12 @@ public class WebDataDaoImpl implements WebDataDao {
 
             result = ((Number) criteria.uniqueResult()).intValue(); // 统计计算结果
 
+            logger.info("queryAllWebDataCount查询出来的结果是"+result);
+
             tx.commit();
 
         } catch (Exception e) {
+            logger.error("queryAllWebDataCount出现错误，错误的堆栈是：", e);
             e.printStackTrace();
             tx.rollback();
         }

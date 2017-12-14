@@ -121,7 +121,7 @@
 
     <!-- debug log -->
     <!-- name指定的是包名，表示这个logger只记录com.shinnlove.controller下的所有日志 -->
-    <logger name="com.shinnlove.web.controller" additivity="true">  <!-- additivity 是否继承root -->
+    <logger name="com.shinnlove" additivity="true">  <!-- additivity 是否继承root -->
         <!-- <level value="${loggingLevel}" />   -->
         <level value="DEBUG"></level>  <!-- 现在级别 -->
         <appender-ref ref="DEBUG-APPENDER"/>
@@ -129,13 +129,13 @@
 
     <!-- info log -->
     <!-- name必须指定包名，这样只操作此包下的log，包外的log日志不予记录！！！ -->
-    <logger name="com.shinnlove.web.controller" additivity="true">
+    <logger name="com.shinnlove" additivity="true">
         <level value="INFO"></level>
         <appender-ref ref="INFO-APPENDER"/>
     </logger>
 
     <!-- warn log -->
-    <logger name="com.shinnlove.web.controller" additivity="true">
+    <logger name="com.shinnlove" additivity="true">
         <level value="WARN"></level>
         <appender-ref ref="WARN-APPENDER"/>
     </logger>
