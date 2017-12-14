@@ -9,7 +9,7 @@
         <param name="target" value="System.out"/>  <!-- 输出到控制台 -->
         <layout class="org.apache.log4j.PatternLayout"> <!-- loyout表示输出方式，可以多种，class值区分，PatternLayout表示自定义格式 -->
             <param name="ConversionPattern"
-                   value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>  <!-- 输出格式，后面解释 -->
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>  <!-- 输出格式，后面解释 -->
         </layout>
         <!--filter过滤器设置输出的级别:ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF
             所有下面输出的是debug到warn不会有error和fatal-->
@@ -29,7 +29,8 @@
         <param name="threshold" value="all"/> <!-- 记录所有类型日志，记录它和比它等级高的日志all<debug -->
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>  <!-- 日期格式  例子：common-default.log.2015-09-17.log-->
         <layout class="org.apache.log4j.PatternLayout">  <!-- 输出方式 -->
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
     </appender>
 
@@ -40,7 +41,8 @@
         <param name="encoding" value="UTF-8"/>
         <param name="threshold" value="error"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
     </appender>
 
@@ -51,7 +53,8 @@
         <param name="encoding" value="UTF-8"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
     </appender>
 
@@ -62,7 +65,8 @@
         <param name="encoding" value="UTF-8"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
         <!-- 我只想记录info日志，就做如下设置 -->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
@@ -78,7 +82,8 @@
         <param name="encoding" value="UTF-8"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
         <!-- 我只想记录info日志，就做如下设置 -->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
@@ -95,7 +100,8 @@
         <param name="encoding" value="UTF-8"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
     </appender>
 

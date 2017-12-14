@@ -4,9 +4,11 @@
  */
 package com.shinnlove.web.controller.crawler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
 import com.shinnlove.common.util.system.exception.SystemException;
 import com.shinnlove.web.controller.request.WebDataRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 网页数据处理控制器。
@@ -45,11 +49,18 @@ public class WebDataController {
     @RequestMapping(value = "/crawler/webDataDetail.json", method = { RequestMethod.GET,
             RequestMethod.POST }, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getWebDataDetail(String paramKey) {
+    public String getWebDataDetail(HttpServletRequest request, String paramKey) {
+
+        String remoteAddr = request.getRemoteAddr();
+        Date requestTime = new Date();
+
+        MDC.put("ip", remoteAddr);
+        MDC.put("rtime", requestTime);
+
         JSONObject result;
         try {
-            WebData request = JSONObject.parseObject(paramKey, WebData.class);
-            WebData webDataDetail = webDataDao.getWebDataById(request.getId());
+            WebData query = JSONObject.parseObject(paramKey, WebData.class);
+            WebData webDataDetail = webDataDao.getWebDataById(query.getId());
             JSONObject obj = convert(webDataDetail);
             result = buildResult(0, "ok", obj);
         } catch (Exception e) {
@@ -66,7 +77,13 @@ public class WebDataController {
     @RequestMapping(value = "/crawler/webDataList.json", method = { RequestMethod.GET,
             RequestMethod.POST }, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getWebDataByPage(String paramKey) {
+    public String getWebDataByPage(HttpServletRequest request, String paramKey) {
+
+        String remoteAddr = request.getRemoteAddr();
+        Date requestTime = new Date();
+
+        MDC.put("ip", remoteAddr);
+        MDC.put("rtime", requestTime);
 
         logger.warn("进入了getWebDataByPage方法，查询参数paramKey=" + paramKey);
 
@@ -82,16 +99,16 @@ public class WebDataController {
 
         JSONObject result;
         try {
-            WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
+            WebDataRequest query = JSON.parseObject(paramKey, WebDataRequest.class);
             //            List<WebData> webDataList = webDataDao.queryWebDataByPage(request, request.getPageNo(),
             //                request.getPageSize());
 
             //            List<WebData> webDataList = webDataDao.queryWebDataByPage(null, 1, 10);
 
             // 查询总的数据条数
-            Long count = webDataDao.queryAllWebDataCount(request);
+            Long count = webDataDao.queryAllWebDataCount(query);
 
-            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
+            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(query);
 
             JSONArray array = new JSONArray();
             for (WebData w : webDataList) {
