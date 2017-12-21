@@ -55,10 +55,10 @@
         </layout>
     </appender>
 
-    <!-- [info日志APPENDER] -->
-    <appender name="INFO-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${webapp.root}/logs/controller/info-log.log"/>
-        <param name="Append" value="false"/>
+    <!-- [controller层的info日志APPENDER] -->
+    <appender name="CONTROLLER-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/myspring-controller.log"/>
+        <param name="Append" value="true"/>
         <param name="encoding" value="UTF-8"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -67,43 +67,27 @@
         <!-- 我只想记录info日志，就做如下设置 -->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="info"/>
-            <param name="LevelMax" value="info"/>
-        </filter>
-    </appender>
-
-    <!-- [info日志APPENDER] -->
-    <appender name="UTIL-INFO-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${webapp.root}/logs/controller/util-info-log.log"/>
-        <param name="Append" value="false"/>
-        <param name="encoding" value="UTF-8"/>
-        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
-        </layout>
-        <!-- 我只想记录info日志，就做如下设置 -->
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="info"/>
-            <param name="LevelMax" value="info"/>
-        </filter>
-    </appender>
-
-    <!-- [info日志APPENDER] -->
-    <appender name="WARN-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${webapp.root}/logs/controller/warn-log.log"/>
-        <param name="Append" value="false"/>
-        <param name="encoding" value="UTF-8"/>
-        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
-        </layout>
-        <!-- 我只想记录info日志，就做如下设置 -->
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="warn"/>
             <param name="LevelMax" value="warn"/>
         </filter>
     </appender>
 
-    <!-- [组件日志APPENDER] -->
+    <!-- [util层的info日志APPENDER] -->
+    <appender name="UTIL-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/util-log.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+        <!-- 我只想记录info日志，就做如下设置 -->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="info"/>
+            <param name="LevelMax" value="warn"/>
+        </filter>
+    </appender>
+
+    <!-- [组件日志APPENDER，目前没有接入组件没用上] -->
     <appender name="COMPONENT-APPENDER"
               class="org.apache.log4j.DailyRollingFileAppender">
         <param name="File" value="${webapp.root}/logs/logistics-component.log"/>
@@ -116,44 +100,29 @@
     </appender>
 
     <!-- Root Logger -->
-    <!-- 所有logger的父类，记录所有的日志。 -->
+    <!-- 所有logger的父类，记录控制台输出和所有的日志。 -->
     <root>
         <level value="ALL"></level> <!-- 限定记录等级 -->
-        <appender-ref ref="DEFAULT-APPENDER"/> <!-- 调用记录方式 -->
+        <appender-ref ref="DEFAULT-APPENDER"/> <!-- 关联logger的appender -->
         <appender-ref ref="console"/>
     </root>
 
-    <!-- [公共Logger] 严重错误(name指定的是包名，阿里巴巴的日志可以指定一些常量名，因为更改过logger代码) -->
+    <!-- [记录严重错误的公共Logger] (name指定的是包名，阿里巴巴的日志name可以指定一些常量名，因为更改过logger代码) -->
     <logger name="com.shinnlove" additivity="false">
         <level value="error"/>
         <appender-ref ref="ERROR-APPENDER"/>
     </logger>
 
-    <!-- debug log -->
-    <!-- name指定的是包名，表示这个logger只记录com.shinnlove.controller下的所有日志 -->
-    <logger name="com.shinnlove.web.controller" additivity="true">  <!-- additivity 是否继承root -->
-        <!-- <level value="${loggingLevel}" />   -->
-        <level value="DEBUG"></level>  <!-- 现在级别 -->
-        <appender-ref ref="DEBUG-APPENDER"/>
-    </logger>
-
-    <!-- info log -->
-    <!-- name必须指定包名，这样只操作此包下的log，包外的log日志不予记录！！！ -->
-    <logger name="com.shinnlove.web.controller" additivity="true">
-        <level value="INFO"></level>
-        <appender-ref ref="INFO-APPENDER"/>
-    </logger>
-
-    <!-- util中的日志配置 -->
+    <!-- util层的日志配置 -->
     <logger name="com.shinnlove.common.util" additivity="true">
         <level value="INFO"></level>
-        <appender-ref ref="UTIL-INFO-APPENDER"/>
+        <appender-ref ref="UTIL-APPENDER"/>
     </logger>
 
-    <!-- warn log -->
+    <!-- controller层的info和warn -->
     <logger name="com.shinnlove.web.controller" additivity="true">
-        <level value="WARN"></level>
-        <appender-ref ref="WARN-APPENDER"/>
+        <level value="INFO"></level>
+        <appender-ref ref="CONTROLLER-APPENDER"/>
     </logger>
 
 </log4j:configuration>

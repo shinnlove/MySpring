@@ -19,6 +19,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shinnlove.common.dao.WebDataDao;
 import com.shinnlove.common.model.WebData;
+import com.shinnlove.common.util.log.ExceptionUtil;
+import com.shinnlove.common.util.log.LoggerUtil;
 import com.shinnlove.common.util.system.exception.SystemException;
 import com.shinnlove.web.controller.request.WebDataRequest;
 
@@ -69,7 +71,7 @@ public class WebDataController {
     @ResponseBody
     public String getWebDataByPage(String paramKey) {
 
-        logger.warn("进入了getWebDataByPage方法，查询参数paramKey=" + paramKey);
+        LoggerUtil.info(logger, "(LoggerUtil)进入了getWebDataByPage方法，查询参数paramKey=", paramKey);
 
         try {
             int a = 10;
@@ -78,7 +80,10 @@ public class WebDataController {
             String str = String.valueOf(c);
         } catch (Exception e) {
             SystemException exception = new SystemException("出现错误", e);
-            logger.error("捕捉到发生错误：", exception);
+
+            ExceptionUtil.error(exception, "(ExceptionUtil)捕捉到发生错误");
+
+            //            logger.error("(logger)捕捉到发生错误：", exception);
         }
 
         JSONObject result;
@@ -93,6 +98,9 @@ public class WebDataController {
             Long count = webDataDao.queryAllWebDataCount(request);
 
             List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
+
+            LoggerUtil.warn(logger, "(LoggerUtil)查询到数据库总数count=", count, "，查询到的数据webDataList=",
+                webDataList);
 
             JSONArray array = new JSONArray();
             for (WebData w : webDataList) {
