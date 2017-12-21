@@ -4,8 +4,10 @@
  */
 package com.shinnlove.web.controller.crawler;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import com.shinnlove.common.util.log.ExceptionUtil;
 import com.shinnlove.common.util.log.LoggerUtil;
 import com.shinnlove.common.util.system.exception.SystemException;
 import com.shinnlove.web.controller.request.WebDataRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 网页数据处理控制器。
@@ -69,7 +73,13 @@ public class WebDataController {
     @RequestMapping(value = "/crawler/webDataList.json", method = { RequestMethod.GET,
             RequestMethod.POST }, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getWebDataByPage(String paramKey) {
+    public String getWebDataByPage(HttpServletRequest request, String paramKey) {
+
+        String remoteAddr = request.getRemoteAddr();
+        Date requestTime = new Date();
+
+        MDC.put("ip", remoteAddr);
+        MDC.put("rtime", requestTime);
 
         LoggerUtil.info(logger, "(LoggerUtil)进入了getWebDataByPage方法，查询参数paramKey=", paramKey);
 
@@ -88,16 +98,16 @@ public class WebDataController {
 
         JSONObject result;
         try {
-            WebDataRequest request = JSON.parseObject(paramKey, WebDataRequest.class);
+            WebDataRequest query = JSON.parseObject(paramKey, WebDataRequest.class);
             //            List<WebData> webDataList = webDataDao.queryWebDataByPage(request, request.getPageNo(),
             //                request.getPageSize());
 
             //            List<WebData> webDataList = webDataDao.queryWebDataByPage(null, 1, 10);
 
             // 查询总的数据条数
-            Long count = webDataDao.queryAllWebDataCount(request);
+            Long count = webDataDao.queryAllWebDataCount(query);
 
-            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(request);
+            List<WebData> webDataList = webDataDao.queryAllWebDataByPage(query);
 
             LoggerUtil.warn(logger, "(LoggerUtil)查询到数据库总数count=", count, "，查询到的数据webDataList=",
                 webDataList);
