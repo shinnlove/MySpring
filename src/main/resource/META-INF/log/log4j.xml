@@ -72,6 +72,22 @@
     </appender>
 
     <!-- [info日志APPENDER] -->
+    <appender name="UTIL-INFO-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/controller/util-info-log.log"/>
+        <param name="Append" value="false"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+        <!-- 我只想记录info日志，就做如下设置 -->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="info"/>
+            <param name="LevelMax" value="info"/>
+        </filter>
+    </appender>
+
+    <!-- [info日志APPENDER] -->
     <appender name="WARN-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="File" value="${webapp.root}/logs/controller/warn-log.log"/>
         <param name="Append" value="false"/>
@@ -126,6 +142,12 @@
     <logger name="com.shinnlove.web.controller" additivity="true">
         <level value="INFO"></level>
         <appender-ref ref="INFO-APPENDER"/>
+    </logger>
+
+    <!-- util中的日志配置 -->
+    <logger name="com.shinnlove.common.util" additivity="true">
+        <level value="INFO"></level>
+        <appender-ref ref="UTIL-INFO-APPENDER"/>
     </logger>
 
     <!-- warn log -->
