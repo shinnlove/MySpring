@@ -13,12 +13,16 @@
        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd"
        default-autowire="byName">
 
-    <!-- 在这里配置各种bean -->
+    <!-- 配置连接工厂bean，active代理默认监听端口61616 -->
+    <!-- 使用activemq的命名空间 -->
+    <!--<amq:connectionFactory id="connectionFactory"/>-->
+    <bean id="connectionFactory"
+          class="org.apache.activemq.spring.ActiveMQConnectionFactory" p:brokerURL="tcp://127.0.0.1:61616"/>
 
-    <!-- 发布一个dao层服务 -->
-    <bean id="userDao"
-          class="com.shinnlove.common.dao.impl.UserDaoImpl"/>
-    <bean id="webDataDao"
-          class="com.shinnlove.common.dao.impl.WebDataDaoImpl"/>
+    <!-- 配置消息目的地 -->
+    <!-- 使用activemq的命名空间 -->
+    <!--<amq:queue id="spittleQueue" physicalName="spittle.alert.queue"/>-->
+    <bean id="queue"
+          class="org.apache.activemq.command.ActiveMQQueue" c:_0="spitter.queue"/>
 
 </beans>
