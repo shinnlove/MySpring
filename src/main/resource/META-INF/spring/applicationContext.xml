@@ -25,7 +25,7 @@
     <!-- 使用activemq的命名空间 -->
     <!--<amq:connectionFactory id="connectionFactory"/>-->
     <bean id="connectionFactory"
-          class="org.apache.activemq.spring.ActiveMQConnectionFactory"/>
+          class="org.apache.activemq.spring.ActiveMQConnectionFactory" p:brokerURL="tcp://127.0.0.1:61616"/>
 
     <!-- 配置消息目的地 -->
     <!-- 使用activemq的命名空间 -->
