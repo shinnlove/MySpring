@@ -25,4 +25,9 @@
     <bean id="queue"
           class="org.apache.activemq.command.ActiveMQQueue" c:_0="spitter.queue"/>
 
+    <!-- 配置 spring jmsTemplate 模板 -->
+    <bean id="jmsTemplate"
+          class="org.springframework.jms.core.JmsTemplate"
+          c:_0-ref="connectionFactory" p:defaultDestinationName="spittle.alert.queue"/>
+
 </beans>
