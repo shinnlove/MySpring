@@ -5,12 +5,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd"
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd"
        default-autowire="byName">
 
     <!-- 配置连接工厂bean，active代理默认监听端口61616 -->
@@ -29,5 +30,14 @@
     <bean id="jmsTemplate"
           class="org.springframework.jms.core.JmsTemplate"
           c:_0-ref="connectionFactory" p:defaultDestinationName="spittle.alert.queue"/>
+
+    <!-- 消息驱动bean -->
+    <bean id="messageDrivenReceiver"
+          class="com.shinnlove.core.service.activemq.message.driven.MessageDrivenReceiver"/>
+    <!-- 消息驱动 -->
+    <jms:listener-container connection-factory="connectionFactory">
+        <jms:listener destination="spitter.alert.queue"
+                      ref="messageDrivenReceiver" method="handleMessage"/>
+    </jms:listener-container>
 
 </beans>

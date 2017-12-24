@@ -46,13 +46,45 @@
 
     <!-- [debug日志APPENDER] -->
     <appender name="DEBUG-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${webapp.root}/logs/controller/debug-log.log"/>
+        <param name="File" value="${webapp.root}/logs/controller/debug.log"/>
         <param name="Append" value="true"/>
         <param name="encoding" value="UTF-8"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
+    </appender>
+
+    <!-- [util层的info日志APPENDER] -->
+    <appender name="UTIL-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/util.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+        <!-- 我只想记录info日志，就做如下设置 -->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="info"/>
+            <param name="LevelMax" value="warn"/>
+        </filter>
+    </appender>
+
+    <!-- [core service 层的info日志APPENDER] -->
+    <appender name="CORE-SERVICE-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/core-service.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+        <!-- 我只想记录info日志，就做如下设置 -->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="info"/>
+            <param name="LevelMax" value="warn"/>
+        </filter>
     </appender>
 
     <!-- [controller层的info日志APPENDER] -->
@@ -64,22 +96,6 @@
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                    value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>  <!-- 控制器日志带有MDC存入的IP地址和访问时间，如果在项目中有过滤器，你可以把获取ip 的方法直接定义在过滤器中，然后在配置文件中配置获取ip的显示就可以了。 -->
-        </layout>
-        <!-- 我只想记录info日志，就做如下设置 -->
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="info"/>
-            <param name="LevelMax" value="warn"/>
-        </filter>
-    </appender>
-
-    <!-- [util层的info日志APPENDER] -->
-    <appender name="UTIL-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${webapp.root}/logs/util-log.log"/>
-        <param name="Append" value="true"/>
-        <param name="encoding" value="UTF-8"/>
-        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
         <!-- 我只想记录info日志，就做如下设置 -->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
@@ -118,6 +134,11 @@
     <logger name="com.shinnlove.common.util" additivity="true">
         <level value="INFO"></level>
         <appender-ref ref="UTIL-APPENDER"/>
+    </logger>
+
+    <logger name="com.shinnlove.core.service" additivity="true">
+        <level value="INFO"></level>
+        <appender-ref ref="CORE-SERVICE-APPENDER"/>
     </logger>
 
     <!-- controller层的info和warn -->
