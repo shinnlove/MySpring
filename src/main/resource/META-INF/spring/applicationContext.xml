@@ -20,5 +20,7 @@
           class="com.shinnlove.common.dao.impl.UserDaoImpl"/>
     <bean id="webDataDao"
           class="com.shinnlove.common.dao.impl.WebDataDaoImpl"/>
+    <bean id="randomTeamDao"
+          class="com.shinnlove.common.dao.impl.RandomTeamDaoImpl"/>
 
 </beans>
