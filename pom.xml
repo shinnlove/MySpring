@@ -115,6 +115,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- h2数据库 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+            <!--<scope>test</scope>-->
+        </dependency>
         <!--mysql驱动包-->
         <dependency>
             <groupId>mysql</groupId>
