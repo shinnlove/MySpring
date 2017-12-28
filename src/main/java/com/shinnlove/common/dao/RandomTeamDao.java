@@ -27,10 +27,11 @@ public interface RandomTeamDao {
     /**
      * 判断某个用户的域账号是否已经存在。
      *
-     * @param domainAccount
+     * @param empId   
+     * @param empName
      * @return
      */
-    int userExist(String domainAccount);
+    int userExist(String empId, String empName);
 
     /**
      * 查询team。

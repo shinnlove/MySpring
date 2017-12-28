@@ -59,12 +59,14 @@ public class RandomTeamDaoImplTest {
 
     @Test
     public void testUserExist() {
-        String domainAccount1 = "evelyn.hfl";
-        int result1 = randomTeamDao.userExist(domainAccount1);
+        String empId = "123456";
+        String empName = "金升";
+        int result1 = randomTeamDao.userExist(empId, empName);
         assertEquals(1, result1);
 
-        String domainAccount2 = "chensheng.zcs";
-        int result2 = randomTeamDao.userExist(domainAccount2);
+        String empId2 = "123456";
+        String empName2 = "金升";
+        int result2 = randomTeamDao.userExist(empId2, empName2);
         assertEquals(0, result2);
     }
 

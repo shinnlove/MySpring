@@ -101,7 +101,6 @@
 <script type="text/javascript" src="../js/artTemplate/template.js"></script>
 <script type="text/javascript" src="../js/utils/utils-common.js"></script>
 <script type="text/javascript">
-    var click = false;
     var lottery = {
         index: -1,    //当前转动到哪个位置，起点位置
         count: 8,     //总共有多少个位置
@@ -159,8 +158,7 @@
                 var url = "randomSelect.json",
                     params = {
                         empId: empId,
-                        empName: empName,
-                        domainAccount: domainAccount
+                        empName: empName
                     }, // 请求数据
                     opts = {
                         loadingMsg: "随机分组中...", // 自定义loading信息，也可以在beforeSend中呼出有提示信息的等待框
@@ -245,19 +243,19 @@
         utils.jQueryXHR.ajax(url, params, opts);
     }
 
-    var empId = 0, empName = "", domainAccount = "";
+    var empId, empName;
+    var click = false;
 
     $(function () {
 
         // 收集员工信息
         empId = utils.URI.getQuery("empId");
         empName = decodeURI(utils.URI.getQuery("empName"));
-        domainAccount = utils.URI.getQuery("domainAccount");
-        if (domainAccount == null || domainAccount == "" || typeof domainAccount == "undefined") {
+        if (empId == null || empId == "" || typeof empId == "undefined") {
             window.location.href = "entry";
         }
 
-        console.log(empId + empName + domainAccount);
+        console.log(empId + ", " + empName);
 
         jQuery.extend(jQuery.ajax, {_requestCache: {}}); // 扩展ajax缓存
 

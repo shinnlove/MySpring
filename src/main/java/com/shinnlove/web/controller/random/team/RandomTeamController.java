@@ -128,16 +128,16 @@ public class RandomTeamController {
      * 请求随机分组页面
      *
      * @param empId         员工工号
-     * @param domainAccount 员工域账号
+     * @param empName       员工名字
      * @return
      */
     @RequestMapping(value = "/team/randomSelect.json", method = RequestMethod.POST)
     @ResponseBody
-    public String requestForRandom(String empId, String empName, String domainAccount) {
+    public String requestForRandom(String empId, String empName) {
         JSONObject result;
         try {
 
-            int exist = randomTeamDao.userExist(domainAccount);
+            int exist = randomTeamDao.userExist(empId, empName);
             if (exist <= 0) {
                 // 还没分过组就准备分组
                 Map<Integer/*team_id*/, Integer/*count*/> countMap = new HashMap<Integer, Integer>();
@@ -154,22 +154,26 @@ public class RandomTeamController {
                     countMap.put(teamId, sum);
                 } // end for
 
-                int okTeamId = 1, min = 1;
-                for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
-                    int teamId = entry.getKey();
-                    int oneTeamCount = entry.getValue();
+                //                int okTeamId = 1, min = 1;
+                //                for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
+                //                    int teamId = entry.getKey();
+                //                    int oneTeamCount = entry.getValue();
+                //
+                //                    if (oneTeamCount <= min) {
+                //                        min = oneTeamCount;
+                //                        okTeamId = teamId;
+                //                    }
+                //                }
 
-                    if (oneTeamCount <= min) {
-                        min = oneTeamCount;
-                        okTeamId = teamId;
-                    }
-                }
+                int max = 100000;
+                Random random = new Random();
+                int okTeamId = random.nextInt(max) % 4;
 
                 // 准备插入
                 RandomTeam randomTeam = new RandomTeam();
                 randomTeam.setEmpId(empId);
                 randomTeam.setEmpName(empName);
-                randomTeam.setDomainAccount(domainAccount);
+                randomTeam.setDomainAccount("alibaba");
                 randomTeam.setTeamId(okTeamId);
                 randomTeam.setTeamName(teamNameMap.get(okTeamId));
                 randomTeam.setGmtCreate(new Date());

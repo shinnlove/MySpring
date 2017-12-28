@@ -55,7 +55,7 @@ public class RandomTeamDaoImpl implements RandomTeamDao {
     }
 
     @Override
-    public int userExist(String domainAccount) {
+    public int userExist(String empId, String empName) {
         // 事务对象
         Transaction tx = null;
 
@@ -69,7 +69,8 @@ public class RandomTeamDaoImpl implements RandomTeamDao {
             Criteria criteria = session.createCriteria(RandomTeam.class);
 
             // 查询结果
-            criteria = criteria.add(Restrictions.eq("domainAccount", domainAccount)).setProjection(
+            criteria = criteria.add(Restrictions.eq("empId", empId))
+                .add(Restrictions.eq("empName", empName)).setProjection(
                 Projections.rowCount()); // 此处添加count函数
 
             result = ((Number) criteria.uniqueResult()).intValue(); // 统计计算结果
