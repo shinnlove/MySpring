@@ -35,14 +35,14 @@ import com.shinnlove.common.util.system.exception.SystemException;
 public class RandomTeamController {
 
     /** logger */
-    private static Logger                                         logger      = LoggerFactory
-                                                                                  .getLogger(RandomTeamController.class);
+    private static Logger                                         logger       = LoggerFactory
+                                                                                   .getLogger(RandomTeamController.class);
     /** 随机team仓储 */
     @Autowired
     private RandomTeamDao                                         randomTeamDao;
 
     /** 组的映射 */
-    private static Map<Integer/*team_id*/, String/*team_name*/> teamNameMap = new HashMap<Integer, String>();
+    private static Map<Integer/*team_id*/, String/*team_name*/> teamNameMap  = new HashMap<Integer, String>();
 
     /** ctoken的hash映射 */
     private static ConcurrentHashMap<String, String>              tokenHashSet = new ConcurrentHashMap<String, String>();
@@ -198,20 +198,20 @@ public class RandomTeamController {
                             countMap.put(teamId, sum);
                         } // end for
 
-                        //                int okTeamId = 1, min = 1;
-                        //                for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
-                        //                    int teamId = entry.getKey();
-                        //                    int oneTeamCount = entry.getValue();
-                        //
-                        //                    if (oneTeamCount <= min) {
-                        //                        min = oneTeamCount;
-                        //                        okTeamId = teamId;
-                        //                    }
-                        //                }
+                        int okTeamId = 1, min = 100000;
+                        for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
+                            int teamId = entry.getKey();
+                            int oneTeamCount = entry.getValue();
 
-                        int max = 100000;
-                        Random random = new Random();
-                        int okTeamId = random.nextInt(max) % 4 + 1;
+                            if (oneTeamCount < min) {
+                                min = oneTeamCount;
+                                okTeamId = teamId;
+                            }
+                        }
+
+                        //                        int max = 100000;
+                        //                        Random random = new Random();
+                        //                        int okTeamId = random.nextInt(max) % 4 + 1;
 
                         // 准备插入
                         RandomTeam randomTeam = new RandomTeam();
