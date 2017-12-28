@@ -249,6 +249,19 @@
 
     $(function () {
 
+        // 如果页面ready的时候，有收货地址编号和收货地址名称的，也可以去支付了
+        if (sessionStorage.person) {
+            // 有信息
+            empId = utils.URI.getQuery("empId");
+            empName = utils.URI.getQuery("empName");
+            domainAccount = utils.URI.getQuery("domainAccount");
+        } else {
+            // 无信息跳回finworks去登录
+            window.location.href = "http://finworks-d7856.alipay.net/finout/routeCalculateAttempt.htm";
+        }
+        console.log(empId);
+        console.log(empName);
+        console.log(domainAccount);
 
         jQuery.extend(jQuery.ajax, {_requestCache: {}}); // 扩展ajax缓存
 
