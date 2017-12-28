@@ -4,6 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/artDialog/ui-dialog.css">
     <title>入口</title>
 </head>
 
@@ -18,6 +19,7 @@
     </form>
 </div>
 <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/artDialog/dialog-min.js"></script>
 <script type="text/javascript" src="../js/utils/utils-common.js"></script>
 <script type="text/javascript">
     $(function () {
