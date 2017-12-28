@@ -167,7 +167,7 @@ public class RandomTeamController {
 
                 int max = 100000;
                 Random random = new Random();
-                int okTeamId = random.nextInt(max) % 4;
+                int okTeamId = random.nextInt(max) % 4 + 1;
 
                 // 准备插入
                 RandomTeam randomTeam = new RandomTeam();
