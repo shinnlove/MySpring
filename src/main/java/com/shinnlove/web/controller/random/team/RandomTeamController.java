@@ -190,7 +190,7 @@ public class RandomTeamController {
 
             } else {
                 // 分过组了就返回已经分过组了
-                result = buildResult(10001, "用户已经分过组:", null);
+                result = buildResult(10001, "用户已经分过组，请不要重复点击！", null);
             }
 
         } catch (Exception e) {
