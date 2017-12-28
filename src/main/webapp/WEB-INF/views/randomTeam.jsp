@@ -327,7 +327,9 @@
                     // 请求服务端
                     var url = "randomSelect.json",
                         params = {
-                            domainAccount: domainAccount,
+                            empId: empId,
+                            empName: empName,
+                            domainAccount: domainAccount
                         }, // 请求数据
                         opts = {
                             loadingMsg: "随机分组中...", // 自定义loading信息，也可以在beforeSend中呼出有提示信息的等待框
@@ -339,9 +341,24 @@
                             }, // 处理完成 to do
                             "success": function (result) {
                                 //console.log(result);
-                                lottery.prize = result.data.teamNo;
 
-                                utils.MLoading.tipAfterLoading("你属于第" + result.data.teamNo + "小组。");
+                                if (result.errCode == 0) {
+                                    utils.MLoading.tipAfterLoading("你属于第" + result.data.team_id + "小组【" + result.data.team_name + "】，");
+                                    lottery.prize = result.data.team_id;
+                                } else if (result.errCode == 10001) {
+                                    utils.MLoading.tipAfterLoading("你已经参加过选组，请不要重复参加！");
+                                    lottery.prize = 0;
+                                    setTimeout(function () {
+                                        window.location.reload();
+                                    }, 1500);
+                                } else {
+                                    utils.MLoading.tipAfterLoading(result.errMsg);
+                                    lottery.prize = 0;
+                                    setTimeout(function () {
+                                        window.location.reload();
+                                    }, 1500);
+                                }
+
                             },
                             "error": function (XHR, status, error) {
                                 utils.ART.showDialog("分组失败，请稍后再试", "温馨提示");
@@ -366,7 +383,7 @@
         }
 
         var click = false;
-        var domainAccount = "chensheng.zcs";
+        var empId = 113505, empName = "金升", domainAccount = "chensheng.zcs";
 
         $(function () {
             jQuery.extend(jQuery.ajax, {_requestCache: {}}); // 扩展ajax缓存
@@ -389,6 +406,31 @@
                     return false;
                 }
             });
+
+            // 2秒一次定时查询分组情况
+            setInterval(function () {
+                // 请求服务端
+                var url = "currentTeam.json",
+                    params = {}, // 请求数据
+                    opts = {
+                        loadingMsg: "查询分组中...", // 自定义loading信息，也可以在beforeSend中呼出有提示信息的等待框
+                        loadingMask: false, // loading遮罩
+                        noMsg: true, // 不要成功或错误的解析信息
+                        "beforeSend": function () {
+                        }, // return false直接不提交ajax
+                        "complete": function (XHR, status, requestIndex) {
+                        }, // 处理完成 to do
+                        "success": function (result) {
+                            console.log(result);
+
+                        },
+                        "error": function (XHR, status, error) {
+//                            utils.ART.tipAfterLoading("查询分组失败，请稍后再试", "温馨提示");
+                        }
+                    }; // 请求选项
+                utils.jQueryXHR.ajax(url, params, opts);
+
+            }, 3000);
 
         });
 

@@ -52,6 +52,25 @@ public class RandomTeamController {
     }
 
     /**
+     * 查询当前所有分组情况。
+     *
+     * @return
+     */
+    @RequestMapping(value = "/team/currentTeam.json", method = RequestMethod.POST)
+    @ResponseBody
+    public String queryCurrentTeam() {
+        JSONObject result;
+        try {
+            List<RandomTeam> randomTeamList = randomTeamDao.queryTeam();
+            result = buildResult(0, "ok", randomTeamList);
+        } catch (Exception e) {
+            ExceptionUtil.error(e, "请求随机分组页面出现错误，原因是：", e.getMessage());
+            result = buildResult(-1, "System Error:" + e.getMessage(), null);
+        }
+        return result.toJSONString();
+    }
+
+    /**
      * 请求随机分组页面
      *
      * @param empId         员工工号
@@ -68,16 +87,17 @@ public class RandomTeamController {
             if (exist <= 0) {
                 // 还没分过组就准备分组
                 Map<Integer/*team_id*/, Integer/*count*/> countMap = new HashMap<Integer, Integer>();
-                List<RandomTeam> randomTeamList = randomTeamDao.queryTeam();
+                countMap.put(1, 0);
+                countMap.put(2, 0);
+                countMap.put(3, 0);
+                countMap.put(4, 0);
 
+                // 统计当前组信息
+                List<RandomTeam> randomTeamList = randomTeamDao.queryTeam();
                 for (RandomTeam rt : randomTeamList) {
                     int teamId = rt.getTeamId();
-                    if (countMap.containsKey(teamId)) {
-                        int sum = countMap.get(teamId) + 1;
-                        countMap.put(teamId, sum);
-                    } else {
-                        countMap.put(teamId, 1);
-                    }
+                    int sum = countMap.get(teamId) + 1;
+                    countMap.put(teamId, sum);
                 } // end for
 
                 int okTeamId = 1, min = 1;
