@@ -14,7 +14,7 @@
 
 <header></header>
 <section class="info-container">
-
+    <input type="hidden" name="ctoken" value="${ctoken}">
     <div class="lottery-box">
         <div class="draw" id="lottery">
             <table>
@@ -158,7 +158,8 @@
                 var url = "randomSelect.json",
                     params = {
                         empId: empId,
-                        empName: empName
+                        empName: empName,
+                        ctoken: $("input[name='ctoken']").val()
                     }, // 请求数据
                     opts = {
                         loadingMsg: "随机分组中...", // 自定义loading信息，也可以在beforeSend中呼出有提示信息的等待框
