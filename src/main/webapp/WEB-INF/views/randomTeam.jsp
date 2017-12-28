@@ -48,16 +48,16 @@
                         <div class="img">
                             <img src="../images/dugu.png" alt="">
                         </div>
-                        <span class="name">独孤求败组</span>
+                        <span class="name">独孤求败</span>
                     </td>
                     <td class="gap"></td>
                     <td class=""><a class="draw-btn" href="javascript:">我要参加</a></td>
                     <td class="gap"></td>
                     <td class="item lottery-unit lottery-unit-3">
                         <div class="img">
-                            <img src="../images/dibiaozuiqiang.png" alt="">
+                            <img src="../images/dugu.png" alt="">
                         </div>
-                        <span class="name">地表最强组</span>
+                        <span class="name">独孤求败组</span>
                     </td>
                 </tr>
                 <tr>
@@ -66,23 +66,23 @@
                 <tr>
                     <td class="item lottery-unit lottery-unit-6">
                         <div class="img">
-                            <img src="../images/yanzhi.png" alt="">
-                        </div>
-                        <span class="name">颜值爆表组</span>
-                    </td>
-                    <td class="gap"></td>
-                    <td class="item lottery-unit lottery-unit-5">
-                        <div class="img">
                             <img src="../images/wuxiekeji.png" alt="">
                         </div>
                         <span class="name">无懈可击组</span>
                     </td>
                     <td class="gap"></td>
+                    <td class="item lottery-unit lottery-unit-5">
+                        <div class="img">
+                            <img src="../images/yanzhi.png" alt="">
+                        </div>
+                        <span class="name">颜值爆表组</span>
+                    </td>
+                    <td class="gap"></td>
                     <td class="item lottery-unit lottery-unit-4">
                         <div class="img">
-                            <img src="../images/dugu.png" alt="">
+                            <img src="../images/dibiaozuiqiang.png" alt="">
                         </div>
-                        <span class="name">独孤求败组</span>
+                        <span class="name">地表最强组</span>
                     </td>
                 </tr>
             </table>
@@ -174,7 +174,7 @@
                             //console.log(result);
 
                             if (result.errCode == 0) {
-                                lottery.prize = result.data.team_id;
+                                lottery.prize = ~~(result.data.team_id) - 1;
 
                                 setTimeout(function () {
                                     utils.MLoading.tipAfterLoading("你属于第" + result.data.team_id + "小组【" + result.data.team_name + "】！");
@@ -245,16 +245,16 @@
         utils.jQueryXHR.ajax(url, params, opts);
     }
 
-    var empId = 113505, empName = "金升", domainAccount = "chensheng.zcs";
+    var empId = 0, empName = "", domainAccount = "";
 
     $(function () {
 
         // 收集员工信息
         empId = utils.URI.getQuery("empId");
-        empName = utils.URI.getQuery("empName");
+        empName = decodeURI(utils.URI.getQuery("empName"));
         domainAccount = utils.URI.getQuery("domainAccount");
-        if (empId == null || empId == "" || typeof empId == "undefined") {
-            window.location.href = "http://finworks-d7856.alipay.net/finout/routeCalculateAttempt.htm";
+        if (domainAccount == null || domainAccount == "" || typeof domainAccount == "undefined") {
+            window.location.href = "entry";
         }
 
         console.log(empId + empName + domainAccount);
@@ -306,7 +306,7 @@
                         <li>
                             <div class="team-person">
                                 <div class="avatar">
-                                    <img src="../images/yanzhi.png">
+                                    <img src="https://work.alibaba-inc.com/photo/{{t.emp_id}}.50x50.jpg">
                                 </div>
                                 <div class="user-info">
                                     <span class="user-name">{{t.emp_name}}</span>

@@ -48,6 +48,11 @@ public class RandomTeamController {
         teamNameMap.put(4, "独孤求败");
     }
 
+    @RequestMapping(value = "/team/entry", method = RequestMethod.GET)
+    public String doEnter() {
+        return "entry";
+    }
+
     /**
      * 请求随机分组页面
      */

@@ -157,7 +157,7 @@ var utils = {
             if (search.indexOf('?') != -1) {
                 // 如果search字符串中带上了url传参
                 var str = search.substr(1); // 截取?后边到末尾的字符串
-                return utils.String.parseStr(str, key); // 进行解析
+                return utils.URI.parseStr(str, key); // 进行解析
             }
         },
         /**
