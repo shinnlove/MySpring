@@ -13,5 +13,8 @@
     <div id="root"></div>
     <script src="./js/common.js"></script>
     <script src="./js/index.js"></script>
+    <script>
+        window.location.href = "team/randomTeam";
+    </script>
 </body>
 </html>

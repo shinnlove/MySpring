@@ -1,0 +1,14 @@
+/* 等待与提示 */
+#mLoading{position:absolute;top:60px;left:0;z-index:9999}
+#mLoading,#mLoading .lbk,#mLoading .lcont{width:146px}
+#mLoading .lbk,#mLoading .lcont{position:relative}
+#mLoading .lbk{z-index:0;height:146px;border-radius:10px;background-color:rgba(0,0,0,.5)}
+#mLoading .lcont{z-index:1;margin-top:-146px;padding-top:90px;height:56px;background:url(../../images/loading.gif) no-repeat 50% 50%;background-size:35px 35px;color:#f5f5f5;text-align:center;font-size:14px;line-height:35px;-webkit-background-size:35px 35px}
+.m-tip{position:absolute;top:60px;left:0;z-index:9999;padding:5px 30px}
+.m-tip,.m-tip .m-lbk,.m-tip .m-lcont{max-width:260px;min-width:150px}
+.m-tip .m-lbk,.m-tip .m-lcont{position:relative}
+.m-tip .m-lbk{z-index:0;padding:0 10px 10px;border-radius:10px;background-color:rgba(0,0,0,.35)}
+.m-tip .m-lcont{z-index:1;margin-top:-68px;padding-top:10px;color:#fafafa;text-align:center;word-wrap:break-word!important;font-size:14px;line-height:25px;word-break:break-all!important}
+/* 复制提示 */
+.copy-tips{position:fixed;z-index:9999;bottom:50%;left:50%;margin:0 0 -20px -80px;background-color:rgba(0, 0, 0, 0.2);filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr=#30000000, endColorstr=#30000000);padding:6px;}
+.copy-tips-wrap{padding:10px 20px;text-align:center;border:1px solid #F4D9A6;background-color:#FFFDEE;font-size:14px;}
