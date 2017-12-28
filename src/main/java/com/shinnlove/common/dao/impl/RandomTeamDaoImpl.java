@@ -7,10 +7,9 @@ package com.shinnlove.common.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import com.shinnlove.common.dao.RandomTeamDao;
 import com.shinnlove.common.model.RandomTeam;
@@ -53,6 +52,40 @@ public class RandomTeamDaoImpl implements RandomTeamDao {
             }
         }
         return -1L;
+    }
+
+    @Override
+    public int userExist(String domainAccount) {
+        // 事务对象
+        Transaction tx = null;
+
+        int result = 0;
+
+        try {
+
+            Session session = sessionFactory.getCurrentSession();
+            tx = session.beginTransaction();
+
+            Criteria criteria = session.createCriteria(RandomTeam.class);
+
+            // 查询结果
+            criteria = criteria.add(Restrictions.eq("domainAccount", domainAccount)).setProjection(
+                Projections.rowCount()); // 此处添加count函数
+
+            result = ((Number) criteria.uniqueResult()).intValue(); // 统计计算结果
+
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            if (tx != null) {
+                tx = null;
+            }
+        }
+
+        return result;
     }
 
     @Override

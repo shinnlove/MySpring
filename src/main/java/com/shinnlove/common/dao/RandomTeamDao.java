@@ -25,6 +25,14 @@ public interface RandomTeamDao {
     long insert(RandomTeam randomTeam);
 
     /**
+     * 判断某个用户的域账号是否已经存在。
+     *
+     * @param domainAccount
+     * @return
+     */
+    int userExist(String domainAccount);
+
+    /**
      * 查询team。
      *
      * @return

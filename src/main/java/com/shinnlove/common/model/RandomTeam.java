@@ -26,12 +26,14 @@ public class RandomTeam {
     private Date   gmtCreate;
     /** 修改时间 */
     private Date   gmtModified;
+    /** 员工编号 */
+    private String empId;
+    /** 员工花名 */
+    private String empName;
     /** 组编号 */
     private int    teamId;
     /** 组名 */
     private String teamName;
-    /** 员工编号 */
-    private String empId;
     /** 员工账号 */
     private String domainAccount;
     /** 供写入的备注 */
@@ -92,6 +94,42 @@ public class RandomTeam {
     }
 
     /**
+     * Getter method for property empId.
+     *
+     * @return property value of empId
+     */
+    public String getEmpId() {
+        return empId;
+    }
+
+    /**
+     * Setter method for property empId.
+     *
+     * @param empId value to be assigned to property empId
+     */
+    public void setEmpId(String empId) {
+        this.empId = empId;
+    }
+
+    /**
+     * Getter method for property empName.
+     *
+     * @return property value of empName
+     */
+    public String getEmpName() {
+        return empName;
+    }
+
+    /**
+     * Setter method for property empName.
+     *
+     * @param empName value to be assigned to property empName
+     */
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    /**
      * Getter method for property teamId.
      *
      * @return property value of teamId
@@ -125,24 +163,6 @@ public class RandomTeam {
      */
     public void setTeamName(String teamName) {
         this.teamName = teamName;
-    }
-
-    /**
-     * Getter method for property empId.
-     *
-     * @return property value of empId
-     */
-    public String getEmpId() {
-        return empId;
-    }
-
-    /**
-     * Setter method for property empId.
-     *
-     * @param empId value to be assigned to property empId
-     */
-    public void setEmpId(String empId) {
-        this.empId = empId;
     }
 
     /**

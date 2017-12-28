@@ -4,6 +4,8 @@
  */
 package com.shinnlove.common.dao.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 import java.util.List;
 
@@ -44,14 +46,26 @@ public class RandomTeamDaoImplTest {
         RandomTeam team = new RandomTeam();
 
         team.setEmpId("123456");
+        team.setEmpName("倩倩");
         team.setDomainAccount("evelyn.hfl");
-        team.setMemo("代码添加");
         team.setTeamId(2);
         team.setTeamName("颜值爆表");
+        team.setMemo("代码添加");
         team.setGmtCreate(new Date());
         team.setGmtModified(new Date());
         long id = randomTeamDao.insert(team);
         System.out.println(id);
+    }
+
+    @Test
+    public void testUserExist() {
+        String domainAccount1 = "evelyn.hfl";
+        int result1 = randomTeamDao.userExist(domainAccount1);
+        assertEquals(1, result1);
+
+        String domainAccount2 = "chensheng.zcs";
+        int result2 = randomTeamDao.userExist(domainAccount2);
+        assertEquals(0, result2);
     }
 
 }

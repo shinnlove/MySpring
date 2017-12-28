@@ -14,14 +14,17 @@
         <property name="gmtModified">
             <column name="gmt_modified" sql-type="datetime" not-null="true"/>
         </property>
+        <property name="empId">
+            <column name="emp_id" sql-type="varchar(128)" length="128"/>
+        </property>
+        <property name="empName">
+            <column name="emp_name" sql-type="varchar(128)" length="128"/>
+        </property>
         <property name="teamId" type="int">
             <column name="team_id"/>
         </property>
         <property name="teamName">
             <column name="team_name" sql-type="varchar(128)" length="128"/>
-        </property>
-        <property name="empId">
-            <column name="emp_id" sql-type="varchar(128)" length="128"/>
         </property>
         <property name="domainAccount">
             <column name="domain_account" sql-type="varchar(128)" length="128"/>
