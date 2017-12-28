@@ -89,179 +89,7 @@
         </div>
     </div>
     <div class="team-view">
-        <div class="team-list">
-            <ul>
-                <li>
-                    <div class="one-team">
-                        <h1 class="team-brand">地表最强</h1>
-                        <hr class="brand-hr">
-                        <ul>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="one-team">
-                        <h1 class="team-brand">颜值爆表</h1>
-                        <hr class="brand-hr">
-                        <ul>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="one-team">
-                        <h1 class="team-brand">无懈可击</h1>
-                        <hr class="brand-hr">
-                        <ul>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="one-team">
-                        <h1 class="team-brand">独孤求败</h1>
-                        <hr class="brand-hr">
-                        <ul>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="team-person">
-                                    <div class="avatar">
-                                        <img src="../images/yanzhi.png">
-                                    </div>
-                                    <div class="user-info">
-                                        <span class="user-name">金升</span>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </li>
-                <div class="clearfix"></div>
-            </ul>
-        </div>
+        <!-- 渲染分组信息 -->
     </div>
     <div class="clearfix"></div>
 
@@ -270,9 +98,10 @@
 
 <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../js/artDialog/dialog-min.js"></script>
+<script type="text/javascript" src="../js/artTemplate/template.js"></script>
 <script type="text/javascript" src="../js/utils/utils-common.js"></script>
 <script type="text/javascript">
-
+    var click = false;
     var lottery = {
         index: -1,    //当前转动到哪个位置，起点位置
         count: 8,     //总共有多少个位置
@@ -389,11 +218,41 @@
         return false;
     }
 
-    var click = false;
-    var empId = 113505, empName = "金升", domainAccount = "chensheng.zcs", finalTeamId, finalTeamName;
+    function queryTeamInfo() {
+        // 请求服务端
+        var url = "currentTeam.json",
+            params = {}, // 请求数据
+            opts = {
+                loadingMsg: "查询分组中...",
+                noDefaultLoading: true,
+                loadingMask: false, // loading遮罩
+                noMsg: true, // 不要成功或错误的解析信息
+                "beforeSend": function () {
+                }, // return false直接不提交ajax
+                "complete": function (XHR, status, requestIndex) {
+                }, // 处理完成 to do
+                "success": function (result) {
+                    var tmpl = template("team-tpl", result);
+                    if (tmpl == "{Template Error}") {
+                        tmpl = "啊哦，查询分组信息失败！";
+                    }
+                    $(".team-view").html(tmpl);
+                },
+                "error": function (XHR, status, error) {
+//                            utils.ART.tipAfterLoading("查询分组失败，请稍后再试", "温馨提示");
+                }
+            }; // 请求选项
+        utils.jQueryXHR.ajax(url, params, opts);
+    }
+
+    var empId = 113505, empName = "金升", domainAccount = "chensheng.zcs";
 
     $(function () {
+
+
         jQuery.extend(jQuery.ajax, {_requestCache: {}}); // 扩展ajax缓存
+
+        queryTeamInfo(); // 先查询一次teamInfo
 
         lottery.init('lottery');
 
@@ -414,34 +273,47 @@
             }
         });
 
-        // 2秒一次定时查询分组情况
+        // 3秒一次定时查询分组情况
         setInterval(function () {
-            // 请求服务端
-            var url = "currentTeam.json",
-                params = {}, // 请求数据
-                opts = {
-                    loadingMsg: "查询分组中...", // 自定义loading信息，也可以在beforeSend中呼出有提示信息的等待框
-                    noDefaultLoading: true,
-                    loadingMask: false, // loading遮罩
-                    noMsg: true, // 不要成功或错误的解析信息
-                    "beforeSend": function () {
-                    }, // return false直接不提交ajax
-                    "complete": function (XHR, status, requestIndex) {
-                    }, // 处理完成 to do
-                    "success": function (result) {
-                        console.log(result);
-
-                    },
-                    "error": function (XHR, status, error) {
-//                            utils.ART.tipAfterLoading("查询分组失败，请稍后再试", "温馨提示");
-                    }
-                }; // 请求选项
-            utils.jQueryXHR.ajax(url, params, opts);
-
+            if (click = true) {
+                queryTeamInfo();
+            }
         }, 3000);
 
     });
 
+</script>
+
+<script type="text/html" id="team-tpl">
+    <div class="team-list">
+        <ul>
+            {{each data as e i}}
+            <li>
+                <div class="one-team">
+                    <h1 class="team-brand">{{e.team_name}}</h1>
+                    <hr class="brand-hr">
+                    <ul>
+                        {{each e.members as t j}}
+                        <li>
+                            <div class="team-person">
+                                <div class="avatar">
+                                    <img src="../images/yanzhi.png">
+                                </div>
+                                <div class="user-info">
+                                    <span class="user-name">{{t.emp_name}}</span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </li>
+            {{/each}}
+            <div class="clearfix"></div>
+        </ul>
+    </div>
 </script>
 </body>
 </html>

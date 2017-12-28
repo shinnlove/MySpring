@@ -4,21 +4,22 @@
  */
 package com.shinnlove.web.controller.random.team;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shinnlove.common.dao.RandomTeamDao;
 import com.shinnlove.common.model.RandomTeam;
 import com.shinnlove.common.util.log.ExceptionUtil;
+import com.shinnlove.common.util.log.LoggerUtil;
 import com.shinnlove.common.util.system.exception.SystemException;
 
 /**
@@ -30,6 +31,10 @@ import com.shinnlove.common.util.system.exception.SystemException;
 @Controller
 public class RandomTeamController {
 
+    /** logger */
+    private static Logger                                         logger      = LoggerFactory
+                                                                                  .getLogger(RandomTeamController.class);
+    /** 随机team仓储 */
     @Autowired
     private RandomTeamDao                                         randomTeamDao;
 
@@ -62,12 +67,56 @@ public class RandomTeamController {
         JSONObject result;
         try {
             List<RandomTeam> randomTeamList = randomTeamDao.queryTeam();
-            result = buildResult(0, "ok", randomTeamList);
+
+            Map<Integer, List<RandomTeam>> teamGroup = new HashMap<Integer, List<RandomTeam>>();
+            teamGroup.put(1, new ArrayList<RandomTeam>());
+            teamGroup.put(2, new ArrayList<RandomTeam>());
+            teamGroup.put(3, new ArrayList<RandomTeam>());
+            teamGroup.put(4, new ArrayList<RandomTeam>());
+
+            for (RandomTeam rt : randomTeamList) {
+                try {
+                    teamGroup.get(rt.getTeamId()).add(rt);
+                } catch (Exception e) {
+                    LoggerUtil.warn(logger, e, "有分组信息不完整！跳过该分组");
+                }
+            }
+
+            result = buildResult(0, "ok", wrapperTeamInfo(teamGroup));
         } catch (Exception e) {
             ExceptionUtil.error(e, "请求随机分组页面出现错误，原因是：", e.getMessage());
             result = buildResult(-1, "System Error:" + e.getMessage(), null);
         }
         return result.toJSONString();
+    }
+
+    /**
+     * 包装一下队伍信息。
+     *
+     * @param teamGroup
+     * @return
+     */
+    private JSONArray wrapperTeamInfo(Map<Integer, List<RandomTeam>> teamGroup) {
+        // 最终全队信息
+        JSONArray fullTeamInfo = new JSONArray();
+        for (Map.Entry<Integer, List<RandomTeam>> entry : teamGroup.entrySet()) {
+            JSONObject obj = new JSONObject();
+
+            int teamId = entry.getKey();
+            obj.put("team_id", teamId);
+            obj.put("team_name", teamNameMap.get(teamId));
+
+            JSONArray array = new JSONArray();
+            List<RandomTeam> teamList = entry.getValue();
+            for (RandomTeam r : teamList) {
+                array.add(convert(r));
+            }
+            obj.put("members", array);
+
+            fullTeamInfo.add(obj);
+        } // end for 
+
+        return fullTeamInfo;
     }
 
     /**
@@ -154,6 +203,7 @@ public class RandomTeamController {
         object.put("id", randomTeam.getId());
         object.put("domain_account", randomTeam.getDomainAccount());
         object.put("emp_id", randomTeam.getEmpId());
+        object.put("emp_name", randomTeam.getEmpName());
         object.put("team_id", randomTeam.getTeamId());
         object.put("team_name", randomTeam.getTeamName());
         object.put("gmt_create", randomTeam.getGmtCreate());
