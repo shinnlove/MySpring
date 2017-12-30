@@ -35,6 +35,7 @@ public class TestLog {
             Log4jConfigurer.initLogging("classpath:META-INF/log/log4j.properties");
         } catch (Exception e) {
             e.printStackTrace();
+            ExceptionUtil.error(e, "配置装载错误");
         }
     }
 
