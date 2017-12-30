@@ -16,7 +16,7 @@
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="levelMin" value="debug"/>
             <param name="levelMax" value="warn"/>
-            <param name="AcceptOnMatch" value="true"/>  <!-- 答案：http://bbs.csdn.net/topics/350195913 -->
+            <param name="AcceptOnMatch" value="true"/>  <!-- 这个属性作用参见：http://bbs.csdn.net/topics/350195913 -->
         </filter>
     </appender>
 
@@ -64,7 +64,7 @@
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
-        <!-- 我只想记录info日志，就做如下设置 -->
+        <!-- 我只想记录info-warn日志，就做如下设置 -->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="info"/>
             <param name="LevelMax" value="warn"/>
@@ -80,7 +80,6 @@
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
         </layout>
-        <!-- 我只想记录info日志，就做如下设置 -->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="info"/>
             <param name="LevelMax" value="warn"/>
@@ -97,7 +96,6 @@
             <param name="ConversionPattern"
                    value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>  <!-- 控制器日志带有MDC存入的IP地址和访问时间，如果在项目中有过滤器，你可以把获取ip 的方法直接定义在过滤器中，然后在配置文件中配置获取ip的显示就可以了。 -->
         </layout>
-        <!-- 我只想记录info日志，就做如下设置 -->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="info"/>
             <param name="LevelMax" value="warn"/>
@@ -136,6 +134,7 @@
         <appender-ref ref="UTIL-APPENDER"/>
     </logger>
 
+    <!-- core层的日志配置 -->
     <logger name="com.shinnlove.core.service" additivity="true">
         <level value="INFO"></level>
         <appender-ref ref="CORE-SERVICE-APPENDER"/>
