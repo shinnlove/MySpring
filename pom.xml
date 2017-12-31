@@ -14,6 +14,7 @@
         <http.client.version>4.2.3</http.client.version>
         <apache.httpclient.version>4.5.3</apache.httpclient.version>
         <apache.httpmime.version>4.3.3</apache.httpmime.version>
+        <javax.mail.version>1.5.2</javax.mail.version>
     </properties>
     <dependencies>
         <!-- 单元测试，项目创建好默认就有 -->
@@ -210,6 +211,18 @@
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>1.8.6</version>
+        </dependency>
+
+        <!-- java mail api，2个jar有依赖关系 -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>${javax.mail.version}</version>
         </dependency>
 
         <!-- http client -->
