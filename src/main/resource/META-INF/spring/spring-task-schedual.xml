@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
+       default-autowire="byName">
+
+    <!-- 配置spring自带的定时调度任务 -->
+
+    <!-- 配置任务所在的类为spring的bean -->
+    <bean id="myIntervalTask"
+          class="com.shinnlove.core.service.interval.task.MyIntervalTask"/>
+    <bean id="myAnnotationTask"
+          class="com.shinnlove.core.service.interval.task.MyAnnotationTask"/>
+
+    <!-- xml配置定时调度 -->
+    <task:scheduled-tasks>
+        <task:scheduled ref="myIntervalTask" method="showTask" cron="0 * * * * ?"/>
+    </task:scheduled-tasks>
+
+    <!-- spring自动扫描@Scheduled注解，配置定时任务，当然bean也要被配置在上下文环境中 -->
+    <task:scheduler id="myScheduler" pool-size="10"/>
+    <task:annotation-driven scheduler="myScheduler" mode="proxy"/>
+
+</beans>
