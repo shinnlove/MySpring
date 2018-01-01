@@ -2,18 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shinnlove.common.dao.mybatis.UserDaoMapper">
-    <select id="getUser" parameterType="com.shinnlove.common.model.User"
-            resultType="com.shinnlove.common.model.User">
+    <select id="getUser" parameterType="User" resultType="User">
         SELECT * FROM user WHERE name=#{name} AND password=#{password}
     </select>
-    <select id="getUserById" parameterType="com.shinnlove.common.model.User"
-            resultType="com.shinnlove.common.model.User">
+    <select id="getUserById" parameterType="User" resultType="User">
         SELECT * FROM user WHERE id=#{id}
     </select>
-    <insert id="addUser" parameterType="com.shinnlove.common.model.User" flushCache="true">
+    <insert id="addUser" parameterType="User" flushCache="true">
         INSERT INTO user (id,name,password) VALUES (#{id},#{name},#{password})
     </insert>
-    <update id="updateUser" parameterType="com.shinnlove.common.model.User">
+    <update id="updateUser" parameterType="User">
         UPDATE user SET password=#{password} WHERE id=#{id}
     </update>
     <delete id="deleteUser" parameterType="int">
