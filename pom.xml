@@ -225,6 +225,13 @@
             <version>${javax.mail.version}</version>
         </dependency>
 
+        <!-- apache velocity -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+
         <!-- http client -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
