@@ -10,9 +10,9 @@ import com.shinnlove.common.model.User;
  * mybatis接口，对于mybatis，DAO就是Mapper接口，会由mybatis托管生成具体的Impl。
  *
  * @author shinnlove.jinsheng
- * @version $Id: UserDao.java, v 0.1 2017-12-31 下午6:48 shinnlove.jinsheng Exp $$
+ * @version $Id: UserDaoMapper.java, v 0.1 2017-12-31 下午6:48 shinnlove.jinsheng Exp $$
  */
-public interface UserDao {
+public interface UserDaoMapper {
 
     User getUser(User user);
 

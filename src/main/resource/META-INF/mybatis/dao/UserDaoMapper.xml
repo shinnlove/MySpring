@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shinnlove.common.dao.mybatis.UserDao">
+<mapper namespace="com.shinnlove.common.dao.mybatis.UserDaoMapper">
     <select id="getUser" parameterType="com.shinnlove.common.model.User"
             resultType="com.shinnlove.common.model.User">
         SELECT * FROM user WHERE name=#{name} AND password=#{password}

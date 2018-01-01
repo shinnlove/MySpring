@@ -23,8 +23,8 @@
 
     <!-- 将Mapper->XXXDao设置为spring的bean(也可以@Repository)，使用MapperFactoryBean类，传入interface -->
     <!-- public class MapperFactoryBean<T> extends SqlSessionDaoSupport，已经继承自xxxSupport! -->
-    <bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.shinnlove.common.dao.mybatis.UserDao"></property>
+    <bean id="userDaoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.shinnlove.common.dao.mybatis.UserDaoMapper"></property>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 

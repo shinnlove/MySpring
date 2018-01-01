@@ -4,7 +4,7 @@
  */
 package com.shinnlove.mybatis.dao.impl;
 
-import com.shinnlove.common.dao.mybatis.UserDao;
+import com.shinnlove.common.dao.mybatis.UserDaoMapper;
 import com.shinnlove.common.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,11 +23,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class MybatisTest {
 
     @Autowired
-    private UserDao userDao;
+    private UserDaoMapper userDaoMapper;
 
     @Test
     public void test_mybatis() {
-        User user = userDao.getUserById(3);
+        User user = userDaoMapper.getUserById(3);
         System.out.println(user);
     }
 

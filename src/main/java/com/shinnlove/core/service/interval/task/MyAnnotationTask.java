@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 public class MyAnnotationTask {
 
-    @Scheduled(cron = "* * * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void annotationShowTask() {
         System.out.println("这是被注解扫描到的任务！");
     }
