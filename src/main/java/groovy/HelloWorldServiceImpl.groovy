@@ -2,7 +2,7 @@
  * Alipay.com Inc.
  * Copyright (c) 2004-2018 All Rights Reserved.
  */
-package com.shinnlove.common.service.integration.impl;
+package groovy;
 
 import com.shinnlove.common.service.integration.HelloWorldService;
 
