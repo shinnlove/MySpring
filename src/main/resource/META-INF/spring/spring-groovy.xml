@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:amq="http://activemq.apache.org/schema/core"
-       xmlns:lang="http://www.springframework.org/schema/lang"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lang="http://www.springframework.org/schema/lang"
+       xsi:schemaLocation="http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.1.xsd
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-autowire="byName">
 
     <!-- 在这里配置groovy的bean -->
 
-    <lang:defaults refresh-check-delay="60000" />
+    <lang:defaults refresh-check-delay="60000"/>
 
     <lang:groovy id="helloWorldService" refresh-check-delay="1000"
-                 script-source="groovy/HelloWorldServiceImpl.groovy">
+                 script-source="com/shinnlove/common/service/integration/impl/HelloWorldServiceImpl.groovy">
         <lang:property name="name" value="shinnlove"/>
     </lang:groovy>
-
-
 
 </beans>
