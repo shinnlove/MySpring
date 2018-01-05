@@ -7,11 +7,11 @@
 
     <!-- 在这里配置groovy的bean -->
 
-    <lang:defaults refresh-check-delay="60000"/>
+    <!--<lang:defaults refresh-check-delay="60000"/>-->
 
-    <lang:groovy id="helloWorldService" refresh-check-delay="1000"
-                 script-source="classpath:com/shinnlove/common/service/integration/impl/HelloWorldServiceImpl.groovy">
-        <lang:property name="name" value="shinnlove"/>
-    </lang:groovy>
+    <!--<lang:groovy id="helloWorldService" refresh-check-delay="1000"-->
+                 <!--script-source="classpath:com/shinnlove/common/service/integration/impl/HelloWorldServiceImpl.groovy">-->
+        <!--<lang:property name="name" value="shinnlove"/>-->
+    <!--</lang:groovy>-->
 
 </beans>

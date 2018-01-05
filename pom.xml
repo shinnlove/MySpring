@@ -231,6 +231,12 @@
             <artifactId>velocity</artifactId>
             <version>1.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-tools</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <!-- 需要spring context support的jar支持velocity -->
 
         <!-- http client -->
         <dependency>
