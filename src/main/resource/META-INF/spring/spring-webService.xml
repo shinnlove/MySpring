@@ -16,8 +16,9 @@
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
-    <jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.apache.cxf.service.impl.HelloServiceImpl"
-                    address="/HelloWorld"/>
+    <!-- cxf 依赖的xmlschema-core 与axis2-kernel依赖的xmlschema冲突，引用一个即可。现在引入了axis，打开<jaxws:马上会报错的！ -->
+    <!--<jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.apache.cxf.service.impl.HelloServiceImpl"-->
+                    <!--address="/HelloWorld"/>-->
 
     <!-- axis的服务bean -->
     <bean id="helloAxisService"
