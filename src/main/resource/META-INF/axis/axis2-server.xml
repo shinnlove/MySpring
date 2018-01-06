@@ -1,0 +1,16 @@
+<serviceGroup>
+    <service name="HelloAxisService">
+        <description>MySpring Axis WebService Example</description>
+        <parameter name="ServiceClass">
+            com.shinnlove.common.service.facade.apache.axis2.service.HelloAxisService
+        </parameter>
+        <parameter name="ServiceObjectSupplier">
+            org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier
+        </parameter>
+        <parameter name="SpringBeanName">helloAxisService</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </messageReceivers>
+    </service>
+</serviceGroup>

@@ -23,4 +23,8 @@
     <bean id="randomTeamDao"
           class="com.shinnlove.common.dao.impl.RandomTeamDaoImpl"/>
 
+    <!-- axis服务的bean -->
+    <bean id="helloAxisService"
+          class="com.shinnlove.common.service.facade.apache.axis2.service.impl.HelloAxisServiceImpl"/>
+
 </beans>
