@@ -13,11 +13,11 @@
 
     <!-- apache CXF 发布webservice服务 -->
 
-    <!--<import resource="classpath:META-INF/cxf/cxf.xml"/>-->
-    <!--<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>-->
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
-    <!--<jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.impl.HelloServiceImpl"-->
-                    <!--address="/HelloWorld"/>-->
+    <jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.apache.cxf.service.impl.HelloServiceImpl"
+                    address="/HelloWorld"/>
 
     <!-- axis的服务bean -->
     <bean id="helloAxisService"
