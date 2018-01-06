@@ -11,6 +11,7 @@
         <spring.version>4.2.6.RELEASE</spring.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <apache.cxf.version>3.1.7</apache.cxf.version>
+        <apache.axis2.version>1.7.4</apache.axis2.version>
         <http.client.version>4.2.3</http.client.version>
         <apache.httpclient.version>4.5.3</apache.httpclient.version>
         <apache.httpmime.version>4.3.3</apache.httpmime.version>
@@ -259,9 +260,9 @@
 
         <!-- apache active mq 5.11以后版本增加springframework有冲突，要exclude掉-->
         <dependency>
-        <groupId>org.apache.activemq</groupId>
-        <artifactId>activemq-all</artifactId>
-        <version>5.10.0</version>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.10.0</version>
         </dependency>
 
         <!-- spring-websocket -->
@@ -278,7 +279,7 @@
             <version>RELEASE</version>
         </dependency>
 
-        <!-- 使用apache cxf/xfire 发布webservice服务 -->
+        <!-- 使用apache cxf/xfire 发布WebService服务 begin -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -289,9 +290,49 @@
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${apache.cxf.version}</version>
         </dependency>
+        <!-- 使用apache cxf/xfire 发布webservice服务 end -->
+
+        <!-- apache axis2 发布WebService服务 begin -->
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-xmpp</artifactId>
+            <version>${apache.axis2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-udp</artifactId>
+            <version>${apache.axis2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-tcp</artifactId>
+            <version>${apache.axis2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-webapp</artifactId>
+            <version>${apache.axis2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-xmlbeans</artifactId>
+            <version>${apache.axis2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-spring</artifactId>
+            <version>${apache.axis2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-soapmonitor-servlet</artifactId>
+            <version>${apache.axis2.version}</version>
+        </dependency>
+        <!-- apache axis2 end -->
 
     </dependencies>
     <build>
+        <!-- 多模块整合的时候去掉finalName -->
         <finalName>MySpring</finalName>
         <plugins>
             <plugin>
