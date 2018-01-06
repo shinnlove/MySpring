@@ -71,7 +71,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AxisServlet</servlet-name>
-        <url-pattern>/ws/axis/*</url-pattern>
+        <url-pattern>/services/*</url-pattern>
     </servlet-mapping>
 
     <!-- log4j日志与刷新 -->

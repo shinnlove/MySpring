@@ -1,0 +1,18 @@
+<!-- 此文件必须在WEB-INF目录下并叫services.xml，是默认调用不用配置的 -->
+<serviceGroup>
+    <!-- 发布一个服务 -->
+    <service name="HelloAxisService">
+        <description>MySpring Axis WebService Example</description>
+        <parameter name="ServiceClass">
+            com.shinnlove.common.service.facade.apache.axis2.service.HelloAxisService
+        </parameter>
+        <parameter name="ServiceObjectSupplier">
+            org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier
+        </parameter>
+        <parameter name="SpringBeanName">helloAxisService</parameter>
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+                             class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+        </messageReceivers>
+    </service>
+</serviceGroup>

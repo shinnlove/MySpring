@@ -19,4 +19,8 @@
     <!--<jaxws:endpoint id="helloWord" implementor="com.shinnlove.common.service.facade.impl.HelloServiceImpl"-->
                     <!--address="/HelloWorld"/>-->
 
+    <!-- axis的服务bean -->
+    <bean id="helloAxisService"
+          class="com.shinnlove.common.service.facade.apache.axis2.service.impl.HelloAxisServiceImpl"/>
+
 </beans>
