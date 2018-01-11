@@ -13,8 +13,8 @@
     <!--注意action提交的路径不能/开头，必须是相对路径，而且不需要前面的路径-->
     <h1>我向HRG闻漪发誓：价值观保证填写正确，否则年终绩效给我打325！</h1>
     <form name="randomForm" action="randomTeam" method="get">
-        <input type="text" name="empId" placeholder="请输入你的工号"><br>
-        <input type="text" name="empName" placeholder="请输入你的花名"><br>
+        工号：<input type="text" name="empId" placeholder="请输入你的工号"><br>
+        花名：<input type="text" name="empName" placeholder="请输入你的花名"><br>
         <input type="button" name="entry-btn" value="进入分组">
     </form>
 </div>
