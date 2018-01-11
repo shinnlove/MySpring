@@ -226,7 +226,7 @@ public class RandomTeamController {
                         RandomTeam randomTeam = new RandomTeam();
                         randomTeam.setEmpId(empId);
                         randomTeam.setEmpName(empName);
-                        randomTeam.setDomainAccount("alibaba");
+                        randomTeam.setDomainAccount(empId);
                         randomTeam.setTeamId(desTeamId);
                         randomTeam.setTeamName(teamNameMap.get(desTeamId));
                         randomTeam.setGmtCreate(new Date());
