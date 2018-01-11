@@ -38,20 +38,22 @@
 
             $("form[name='randomForm']").submit();
 
-        }).on("keydown", "input[name='empName']", function () {
+        }).on("keydown", "input[name='empName']", function (e) {
 
-            var empId = $("input[name='empId']").val();
-            var empName = $("input[name='empName']").val();
-            if (empId == "") {
-                utils.ART.showDialog("请输入你的工号", "HRG闻漪对你说：想要325吗？");
-                return false;
-            }
-            if (empName == "") {
-                utils.ART.showDialog("请输入你的花名", "HRG闻漪对你说：想要325吗？");
-                return false;
-            }
+            if (e.keyCode() == 13) {
+                var empId = $("input[name='empId']").val();
+                var empName = $("input[name='empName']").val();
+                if (empId == "") {
+                    utils.ART.showDialog("请输入你的工号", "HRG闻漪对你说：想要325吗？");
+                    return false;
+                }
+                if (empName == "") {
+                    utils.ART.showDialog("请输入你的花名", "HRG闻漪对你说：想要325吗？");
+                    return false;
+                }
 
-            $("form[name='randomForm']").submit();
+                $("form[name='randomForm']").submit();
+            }
 
         });
 

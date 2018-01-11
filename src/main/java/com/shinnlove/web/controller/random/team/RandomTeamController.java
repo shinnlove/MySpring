@@ -206,32 +206,68 @@ public class RandomTeamController {
                             }
                         });
 
-                        // 加权 w20-min, w15, w10, w5-max
-                        int[] ids = new int[50];
+                        // 加权 w100-min, w80, w30, w10-max
+                        int[] ids = new int[220];
                         int size = numList.size();
                         for (int j = 0; j < size; j++) {
                             int id = numList.get(j).getTeamId();
 
-                            if (j == 0) copyWeight(ids, 0, id, 20); // w20
-                            if (j == 1) copyWeight(ids, 20, id, 15); // w15
-                            if (j == 2) copyWeight(ids, 35, id, 10); // w10
-                            if (j == 3) copyWeight(ids, 45, id, 5); // w5
+                            if (j == 0) copyWeight(ids, 0, id, 100); // w100
+                            if (j == 1) copyWeight(ids, 100, id, 80); // w80
+                            if (j == 2) copyWeight(ids, 180, id, 30); // w30
+                            if (j == 3) copyWeight(ids, 210, id, 10); // w10
                         }
 
                         // 伪随机
                         Random random = new Random();
-                        int desTeamId = random.nextInt(28) % 4 + 1;
+                        int desTeamId = random.nextInt(220) % 4 + 1;
 
                         // 准备插入
                         RandomTeam randomTeam = new RandomTeam();
                         randomTeam.setEmpId(empId);
                         randomTeam.setEmpName(empName);
-                        randomTeam.setDomainAccount(empId);
+                        randomTeam.setDomainAccount("alibaba.xxx");
                         randomTeam.setTeamId(desTeamId);
                         randomTeam.setTeamName(teamNameMap.get(desTeamId));
                         randomTeam.setGmtCreate(new Date());
                         randomTeam.setGmtModified(new Date());
                         randomTeam.setMemo("用户选择随机分组，系统为用户自动添加");
+
+                        // 潜规则部分
+
+                        // 妹子平均坐大腿
+                        String sister = randomTeam.getEmpName();
+                        int originId = randomTeam.getTeamId();
+
+                        int yaojin = randomTeamDao.checkUserTeamId("瑶瑾");
+                        int linyun = randomTeamDao.checkUserTeamId("霖云");
+                        int jinlin = randomTeamDao.checkUserTeamId("今凌");
+                        
+                        if ("瑶瑾".equals(sister)) {
+                            originId = teamIdPlus(originId, linyun);
+                            originId = teamIdPlus(originId, jinlin);
+                        } else if ("霖云".equals(sister)) {
+                            originId = teamIdPlus(originId, yaojin);
+                            originId = teamIdPlus(originId, jinlin);
+                        } else if ("今凌".equals(sister)) {
+                            originId = teamIdPlus(originId, yaojin);
+                            originId = teamIdPlus(originId, linyun);
+                        }
+
+                        // 老板的偏好（在最后优先级最高）
+                        Map<String, String> tuple = new HashMap<String, String>();
+                        tuple.put("洞虚", "霖云");
+                        tuple.put("霖云", "洞虚");
+                        String lover = randomTeam.getEmpName();
+                        if (tuple.containsKey(lover)) {
+                            String beloved = tuple.get(lover);
+                            int existId = randomTeamDao.checkUserTeamId(beloved);
+                            if (existId > 0) {
+                                randomTeam.setTeamId(existId); // 强制插队
+                            }
+                        }
+
+                        randomTeam.setTeamId(originId);
                         long id = randomTeamDao.insert(randomTeam);
                         if (id <= 0) {
                             throw new SystemException("为新成员分组后插入数据库失败！");
@@ -256,6 +292,16 @@ public class RandomTeamController {
         }
 
         return result.toJSONString();
+    }
+    
+    private int teamIdPlus(int originId, int validId) {
+        if (originId == validId) {
+            originId++;
+            if (originId > 4) {
+                originId = originId % 4;
+            }
+        }
+        return originId;
     }
 
     /**
