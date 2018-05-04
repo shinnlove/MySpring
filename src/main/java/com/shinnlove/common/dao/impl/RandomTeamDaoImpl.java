@@ -120,6 +120,43 @@ public class RandomTeamDaoImpl implements RandomTeamDao {
         return randomTeamList;
     }
 
+    @Override
+    public int checkUserTeamId(String empName) {
+        // 事务对象
+        Transaction tx = null;
+
+        int result = 0;
+
+        try {
+
+            Session session = sessionFactory.getCurrentSession();
+            tx = session.beginTransaction();
+
+            Criteria criteria = session.createCriteria(RandomTeam.class);
+
+            // 查询结果
+            criteria = criteria.add(Restrictions.eq("empName", empName));
+
+            RandomTeam team = (RandomTeam) criteria.uniqueResult();
+
+            if (team != null) {
+                result = team.getTeamId();
+            }
+
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            if (tx != null) {
+                tx = null;
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Setter method for property sessionFactory.
      *

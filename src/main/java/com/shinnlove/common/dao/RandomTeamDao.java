@@ -40,4 +40,12 @@ public interface RandomTeamDao {
      */
     List<RandomTeam> queryTeam();
 
+    /**
+     * 检索某个员工所在的组号（如果存在）
+     *
+     * @param empName
+     * @return
+     */
+    int checkUserTeamId(String empName);
+
 }

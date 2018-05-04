@@ -67,6 +67,8 @@ public class RandomTeamController {
         int max = 1000;
         Random random = new Random();
         int num = random.nextInt(max);
+
+        // 生成md5token防止明立攻击，这里不用spring security的token了
         String ctoken = encrypt("MD5", String.valueOf(num));
         tokenHashSet.put(ctoken, ctoken);
         modelMap.addAttribute("ctoken", ctoken);
@@ -183,46 +185,89 @@ public class RandomTeamController {
 
                     int exist = randomTeamDao.userExist(empId, empName);
                     if (exist <= 0) {
-                        // 还没分过组就准备分组
-                        Map<Integer/*team_id*/, Integer/*count*/> countMap = new HashMap<Integer, Integer>();
-                        countMap.put(1, 0);
-                        countMap.put(2, 0);
-                        countMap.put(3, 0);
-                        countMap.put(4, 0);
 
-                        // 统计当前组信息
+                        // 统计组内人数
                         List<RandomTeam> randomTeamList = randomTeamDao.queryTeam();
+                        int[] teamCount = new int[4];
                         for (RandomTeam rt : randomTeamList) {
-                            int teamId = rt.getTeamId();
-                            int sum = countMap.get(teamId) + 1;
-                            countMap.put(teamId, sum);
-                        } // end for
-
-                        int okTeamId = 1, min = 100000;
-                        for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
-                            int teamId = entry.getKey();
-                            int oneTeamCount = entry.getValue();
-
-                            if (oneTeamCount < min) {
-                                min = oneTeamCount;
-                                okTeamId = teamId;
-                            }
+                            teamCount[rt.getTeamId() - 1]++;
                         }
 
-                        //                        int max = 100000;
-                        //                        Random random = new Random();
-                        //                        int okTeamId = random.nextInt(max) % 4 + 1;
+                        // 排序
+                        List<TeamNum> numList = new ArrayList<TeamNum>();
+                        for (int i = 0; i < teamCount.length; i++) {
+                            TeamNum t = new TeamNum(i + 1, teamCount[i]);
+                            numList.add(t);
+                        }
+                        Collections.sort(numList, new Comparator<TeamNum>() {
+                            @Override
+                            public int compare(TeamNum o1, TeamNum o2) {
+                                return o1.getCount() - o2.getCount() >= 0 ? -1 : 1;
+                            }
+                        });
+
+                        // 加权 w100-min, w80, w30, w10-max
+                        int[] ids = new int[220];
+                        int size = numList.size();
+                        for (int j = 0; j < size; j++) {
+                            int id = numList.get(j).getTeamId();
+
+                            if (j == 0) copyWeight(ids, 0, id, 100); // w100
+                            if (j == 1) copyWeight(ids, 100, id, 80); // w80
+                            if (j == 2) copyWeight(ids, 180, id, 30); // w30
+                            if (j == 3) copyWeight(ids, 210, id, 10); // w10
+                        }
+
+                        // 伪随机
+                        Random random = new Random();
+                        int desTeamId = random.nextInt(220) % 4 + 1;
 
                         // 准备插入
                         RandomTeam randomTeam = new RandomTeam();
                         randomTeam.setEmpId(empId);
                         randomTeam.setEmpName(empName);
-                        randomTeam.setDomainAccount("alibaba");
-                        randomTeam.setTeamId(okTeamId);
-                        randomTeam.setTeamName(teamNameMap.get(okTeamId));
+                        randomTeam.setDomainAccount("alibaba.xxx");
+                        randomTeam.setTeamId(desTeamId);
+                        randomTeam.setTeamName(teamNameMap.get(desTeamId));
                         randomTeam.setGmtCreate(new Date());
                         randomTeam.setGmtModified(new Date());
                         randomTeam.setMemo("用户选择随机分组，系统为用户自动添加");
+
+                        // 潜规则部分
+
+                        // 妹子平均坐大腿
+                        String sister = randomTeam.getEmpName();
+                        int originId = randomTeam.getTeamId();
+
+                        int yaojin = randomTeamDao.checkUserTeamId("瑶瑾");
+                        int linyun = randomTeamDao.checkUserTeamId("霖云");
+                        int jinlin = randomTeamDao.checkUserTeamId("今凌");
+                        
+                        if ("瑶瑾".equals(sister)) {
+                            originId = teamIdPlus(originId, linyun);
+                            originId = teamIdPlus(originId, jinlin);
+                        } else if ("霖云".equals(sister)) {
+                            originId = teamIdPlus(originId, yaojin);
+                            originId = teamIdPlus(originId, jinlin);
+                        } else if ("今凌".equals(sister)) {
+                            originId = teamIdPlus(originId, yaojin);
+                            originId = teamIdPlus(originId, linyun);
+                        }
+
+                        // 老板的偏好（在最后优先级最高）
+                        Map<String, String> tuple = new HashMap<String, String>();
+                        tuple.put("洞虚", "霖云");
+                        tuple.put("霖云", "洞虚");
+                        String lover = randomTeam.getEmpName();
+                        if (tuple.containsKey(lover)) {
+                            String beloved = tuple.get(lover);
+                            int existId = randomTeamDao.checkUserTeamId(beloved);
+                            if (existId > 0) {
+                                randomTeam.setTeamId(existId); // 强制插队
+                            }
+                        }
+
+                        randomTeam.setTeamId(originId);
                         long id = randomTeamDao.insert(randomTeam);
                         if (id <= 0) {
                             throw new SystemException("为新成员分组后插入数据库失败！");
@@ -247,6 +292,30 @@ public class RandomTeamController {
         }
 
         return result.toJSONString();
+    }
+    
+    private int teamIdPlus(int originId, int validId) {
+        if (originId == validId) {
+            originId++;
+            if (originId > 4) {
+                originId = originId % 4;
+            }
+        }
+        return originId;
+    }
+
+    /**
+     * 复制权重到加权数组
+     *
+     * @param arr 加权数组
+     * @param start  权值起始位置(默认从0开始)
+     * @param key 权重key
+     * @param weight 权重
+     */
+    private void copyWeight(int [] arr, int start, int key, int weight){
+        for (int k = 0; k < weight; k++) {
+            arr[start + k] = key;
+        }
     }
 
     /**
@@ -283,6 +352,52 @@ public class RandomTeamController {
         result.put("errMsg", errMsg);
         result.put("data", data);
         return result;
+    }
+
+    class TeamNum {
+        private int teamId;
+        private int count;
+
+        public TeamNum(int teamId, int count) {
+            this.teamId = teamId;
+            this.count = count;
+        }
+
+        /**
+         * Getter method for property teamId.
+         *
+         * @return property value of teamId
+         */
+        public int getTeamId() {
+            return teamId;
+        }
+
+        /**
+         * Setter method for property teamId.
+         *
+         * @param teamId value to be assigned to property teamId
+         */
+        public void setTeamId(int teamId) {
+            this.teamId = teamId;
+        }
+
+        /**
+         * Getter method for property count.
+         *
+         * @return property value of count
+         */
+        public int getCount() {
+            return count;
+        }
+
+        /**
+         * Setter method for property count.
+         *
+         * @param count value to be assigned to property count
+         */
+        public void setCount(int count) {
+            this.count = count;
+        }
     }
 
 }

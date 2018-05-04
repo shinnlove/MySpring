@@ -21,12 +21,12 @@
 
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
-    <!--<bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
-        <!--<property name="prefix" value="/WEB-INF/views/"/>&lt;!&ndash;设置JSP文件的目录位置&ndash;&gt;-->
-        <!--<property name="suffix" value=".jsp"/>-->
-        <!--<property name="exposeContextBeansAsAttributes" value="true"/>-->
-    <!--</bean>-->
+    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/><!--设置JSP文件的目录位置-->
+        <property name="suffix" value=".jsp"/>
+        <property name="exposeContextBeansAsAttributes" value="true"/>
+    </bean>
 
     <!-- 自动扫描装配，支持spring引入的新注解 -->
     <context:component-scan base-package="com.shinnlove"/>
@@ -35,22 +35,22 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
     <!--velocity模板配置-->
-    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath" value="/WEB-INF/templates/"/>
-        <property name="configLocation" value="classpath:META-INF/velocity/velocity.properties"/>
-        <property name="velocityProperties">
-            <props>
-                <prop key="input.encoding">UTF-8</prop>
-                <prop key="output.encoding">UTF-8</prop>
-            </props>
-        </property>
-    </bean>
+    <!--<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">-->
+        <!--<property name="resourceLoaderPath" value="/WEB-INF/templates/"/>-->
+        <!--<property name="configLocation" value="classpath:META-INF/velocity/velocity.properties"/>-->
+        <!--<property name="velocityProperties">-->
+            <!--<props>-->
+                <!--<prop key="input.encoding">UTF-8</prop>-->
+                <!--<prop key="output.encoding">UTF-8</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
     <!--VelocityViewResolver默认视图配置-->
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-        <property name="suffix" value=".vm"/>
-        <property name="prefix" value=""/>
-        <property name="contentType" value="text/html;charset=UTF-8"/>
-    </bean>
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">-->
+        <!--<property name="suffix" value=".vm"/>-->
+        <!--<property name="prefix" value=""/>-->
+        <!--<property name="contentType" value="text/html;charset=UTF-8"/>-->
+    <!--</bean>-->
 
     <!--带Layout.vm的VelocityLayoutViewResolver-->
     <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">-->
