@@ -308,11 +308,11 @@
             <artifactId>axis2-transport-tcp</artifactId>
             <version>${apache.axis2.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-webapp</artifactId>
-            <version>${apache.axis2.version}</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.apache.axis2</groupId>-->
+        <!--<artifactId>axis2-webapp</artifactId>-->
+        <!--<version>${apache.axis2.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-xmlbeans</artifactId>
@@ -329,6 +329,37 @@
             <version>${apache.axis2.version}</version>
         </dependency>
         <!-- apache axis2 end -->
+
+        <!-- zookeeper原生API -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.9</version>
+        </dependency>
+        <!-- zkclient包装API -->
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <!-- curator完美封装 -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+        <!-- curator扩展API -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+        <!-- 开发测试zookeeper服务 -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-test</artifactId>
+            <version>2.4.2</version>
+        </dependency>
 
     </dependencies>
     <build>
