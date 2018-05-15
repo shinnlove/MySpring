@@ -361,6 +361,45 @@
             <version>2.4.2</version>
         </dependency>
 
+        <!-- netty.io -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>5.0.0.Alpha1</version>
+        </dependency>
+
+        <!-- JiBx与XML处理 -->
+        <!-- 二进制处理 -->
+        <dependency>
+            <groupId>org.apache.bcel</groupId>
+            <artifactId>bcel</artifactId>
+            <version>5.2</version>
+        </dependency>
+        <!-- XML处理 -->
+        <dependency>
+            <groupId>org.ogce</groupId>
+            <artifactId>xpp3</artifactId>
+            <version>1.1.6</version>
+        </dependency>
+        <!-- JiBx运行 -->
+        <dependency>
+            <groupId>org.jibx</groupId>
+            <artifactId>jibx-run</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+        <!-- binding compiler -->
+        <dependency>
+            <groupId>org.jibx</groupId>
+            <artifactId>jibx-bind</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+        <!-- 扩展工具jibx-extras -->
+        <dependency>
+            <groupId>org.jibx</groupId>
+            <artifactId>jibx-extras</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
     </dependencies>
     <build>
         <!-- 多模块整合的时候去掉finalName -->
