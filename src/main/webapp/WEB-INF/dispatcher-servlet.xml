@@ -2,8 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--此文件负责整个mvc中的配置-->
 
@@ -13,11 +17,43 @@
     <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
     <mvc:annotation-driven/>
 
+    <!-- 自动扫描装配，支持spring引入的新注解 -->
+    <context:component-scan base-package="com.shinnlove"/>
+
     <!--静态资源映射-->
     <!--本项目把静态资源放在了webapp的statics目录下，资源映射如下-->
     <mvc:resources mapping="/css/**" location="/WEB-INF/static/css/"/>
     <mvc:resources mapping="/js/**" location="/WEB-INF/static/js/"/>
     <mvc:resources mapping="/images/**" location="/WEB-INF/static/images/"/>
+
+    <!-- converter 媒体类型 -->
+    <util:list id="supportedMediaTypesList" value-type="java.lang.String">
+        <value>application/json;charset=UTF-8</value>
+        <!-- MappingJackson还可以配置，根据需要而定 -->
+        <!-- text/plain;charset=UTF-8 -->
+        <!-- text/*;charset=UTF-8 -->
+        <!-- */*;charset=UTF-8 -->
+    </util:list>
+
+    <!-- spring3.x converters -->
+    <util:list id="converters">
+        <!-- pick up default -->
+        <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+        <!-- 字符串编码 -->
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter"
+              p:supportedMediaTypes-ref="supportedMediaTypesList"/>
+        <!-- json转换，记得三个关联的jar -->
+        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
+              p:supportedMediaTypes-ref="supportedMediaTypesList"/>
+    </util:list>
+
+    <!-- Shinnlove Tips: Use `RequestMappingHandlerAdapter` instead of `AnnotationMethodHandlerAdapter` since spring 3.2. -->
+    <!-- @RestController、@ResponseBody或HttpEntity类会使用——若显示声明覆盖默认装载 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
+          p:messageConverters-ref="converters">
+    </bean>
 
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
@@ -28,67 +64,33 @@
         <property name="exposeContextBeansAsAttributes" value="true"/>
     </bean>
 
-    <!-- 自动扫描装配，支持spring引入的新注解 -->
-    <context:component-scan base-package="com.shinnlove"/>
-
-    <!-- 支持上传文件 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-
     <!--velocity模板配置-->
     <!--<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">-->
-        <!--<property name="resourceLoaderPath" value="/WEB-INF/templates/"/>-->
-        <!--<property name="configLocation" value="classpath:META-INF/velocity/velocity.properties"/>-->
-        <!--<property name="velocityProperties">-->
-            <!--<props>-->
-                <!--<prop key="input.encoding">UTF-8</prop>-->
-                <!--<prop key="output.encoding">UTF-8</prop>-->
-            <!--</props>-->
-        <!--</property>-->
+    <!--<property name="resourceLoaderPath" value="/WEB-INF/templates/"/>-->
+    <!--<property name="configLocation" value="classpath:META-INF/velocity/velocity.properties"/>-->
+    <!--<property name="velocityProperties">-->
+    <!--<props>-->
+    <!--<prop key="input.encoding">UTF-8</prop>-->
+    <!--<prop key="output.encoding">UTF-8</prop>-->
+    <!--</props>-->
+    <!--</property>-->
     <!--</bean>-->
     <!--VelocityViewResolver默认视图配置-->
     <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">-->
-        <!--<property name="suffix" value=".vm"/>-->
-        <!--<property name="prefix" value=""/>-->
-        <!--<property name="contentType" value="text/html;charset=UTF-8"/>-->
+    <!--<property name="suffix" value=".vm"/>-->
+    <!--<property name="prefix" value=""/>-->
+    <!--<property name="contentType" value="text/html;charset=UTF-8"/>-->
     <!--</bean>-->
 
     <!--带Layout.vm的VelocityLayoutViewResolver-->
     <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">-->
-        <!--<property name="suffix" value=".vm"/>-->
-        <!--<property name="prefix" value=""/>-->
-        <!--<property name="contentType" value="text/html;charset=UTF-8"/>-->
-        <!--<property name="layoutUrl" value="/WEB-INF/templates/layout/layout.vm"/>-->
+    <!--<property name="suffix" value=".vm"/>-->
+    <!--<property name="prefix" value=""/>-->
+    <!--<property name="contentType" value="text/html;charset=UTF-8"/>-->
+    <!--<property name="layoutUrl" value="/WEB-INF/templates/layout/layout.vm"/>-->
     <!--</bean>-->
 
-    <!-- 配置json转换器 -->
-    <!--<bean id="jsonMessageConverters"-->
-    <!--class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-    <!--<property name="supportedMediaTypes">-->
-    <!--<list>-->
-    <!--<value>application/json;charset=UTF-8</value>-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--</bean>-->
-    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
-    <!--<property name="messageConverters">-->
-    <!--<list>-->
-    <!--&lt;!&ndash; JSON视图拦截器，碰到ResponseBody会触发 &ndash;&gt;-->
-    <!--<ref bean="jsonMessageConverters"/>-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--</bean>-->
-
-    <!-- 处理请求返回json字符串的乱码问题 -->
-    <mvc:annotation-driven>
-        <mvc:message-converters>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <property name="supportedMediaTypes">
-                    <list>
-                        <value>application/json;charset=UTF-8</value>
-                    </list>
-                </property>
-            </bean>
-        </mvc:message-converters>
-    </mvc:annotation-driven>
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
 </beans>

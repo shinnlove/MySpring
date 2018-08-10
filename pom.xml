@@ -9,6 +9,7 @@
     <url>http://maven.apache.org</url>
     <properties>
         <spring.version>4.2.6.RELEASE</spring.version>
+        <jackson.version>2.7.4</jackson.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <apache.cxf.version>3.1.7</apache.cxf.version>
         <apache.axis2.version>1.7.4</apache.axis2.version>
@@ -147,6 +148,7 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+        <!-- hibernate 二级缓存 ehcache -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
@@ -178,6 +180,24 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
         </dependency>
+
+        <!-- Object -> json转换 begin -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- Object -> json转换 end -->
 
         <!-- json解析-fastjson安全版本 -->
         <dependency>
