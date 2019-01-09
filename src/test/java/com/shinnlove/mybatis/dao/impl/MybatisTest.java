@@ -19,7 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @version $Id: MybatisTest.java, v 0.1 2017-12-31 下午6:46 shinnlove.jinsheng Exp $$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/META-INF/spring/*.xml")
+@ContextConfiguration(locations = { "classpath:/META-INF/spring/spring-database.xml",
+                                   "classpath:/META-INF/spring/spring-database-mybatis.xml" })
 public class MybatisTest {
 
     @Autowired

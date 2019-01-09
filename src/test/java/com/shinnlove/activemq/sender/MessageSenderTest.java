@@ -38,9 +38,16 @@ public class MessageSenderTest {
             session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = spittleQueue;
             MessageProducer producer = session.createProducer(destination);
-            TextMessage message = session.createTextMessage();
-            message.setText("This is my message to you.");
-            producer.send(message);
+            // 循环投递消息
+            for (int i = 0; i < 1000; i++) {
+                try {
+                    TextMessage message = session.createTextMessage();
+                    message.setText("亲爱的，新年快乐;睡觉啦，晚安第" + i + "次。");
+                    producer.send(message);
+                } catch (Exception e) {
+                    System.out.println("本条index=" + i + "消息发送失败");
+                }
+            }
         } catch (JMSException e) {
             e.printStackTrace();
         } finally {

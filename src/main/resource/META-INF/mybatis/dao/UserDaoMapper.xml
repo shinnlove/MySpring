@@ -5,7 +5,7 @@
     <select id="getUser" parameterType="User" resultType="User">
         SELECT * FROM user WHERE name=#{name} AND password=#{password}
     </select>
-    <select id="getUserById" parameterType="User" resultType="User">
+    <select id="getUserById" parameterType="int" resultType="User">
         SELECT * FROM user WHERE id=#{id}
     </select>
     <insert id="addUser" parameterType="User" flushCache="true">
